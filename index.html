@@ -633,7 +633,7 @@ A['pick-day']=el=>{ui.day=el.dataset.date;render()};
 A['wk-prev']=()=>{if(ui.tab==='week'&&ui.mode==='day'){ui.day=addDays(ui.day,-1);ui.ws=weekStart(ui.day)}else{ui.ws=addDays(ui.ws,-7);ui.day=ui.ws}render()};
 A['wk-next']=()=>{if(ui.tab==='week'&&ui.mode==='day'){ui.day=addDays(ui.day,1);ui.ws=weekStart(ui.day)}else{ui.ws=addDays(ui.ws,7);ui.day=ui.ws}render()};
 A['wk-today']=()=>{ui.ws=weekStart(today());ui.day=today();render()};
-A.mission=el=>{const d=el.dataset.date;if(dayWords(ui.sid,d).length)openDay(d);else openWordForm({date:d})};
+A.mission=el=>{const d=el.dataset.date;if(dayWords(ui.sid,d).length)openDay(d);else openSheetImport({dataset:{date:d,sid:ui.sid}})};
 function openDay(d){const sid=ui.sid;openModal(()=>{const L=dayWords(sid,d),c=dayCounts(sid,d,L);
  return `<div class="dh"><h3>${TH_DAYS[dow(d)]} ${fdateY(d)} • ${esc(stu(sid)?.name||'')}</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div><p>รวม ${c.total}/${DAY_MAX} คำ • ${dayTargetText(c)}${c.complete?' • ครบเป้าหมายแล้ว 🎉':` • เหลือ ไทย ${c.remainTh} + EN ${c.remainEn}`}</p>
  <div class="offgrid" data-day="${d}">${L.map(w=>wcard(w)).join('')||'<p class="empty">ยังว่าง</p>'}</div><div class="row end" style="margin-top:10px"><button class="btn sky" data-act="sheet-import" data-date="${d}" data-sid="${sid}">📋 นำเข้าจาก Sheets (วันนี้)</button><button class="btn mint" data-act="add-word" data-date="${d}" data-sid="${sid}">➕ เพิ่มคำศัพท์</button></div>`},{live:true,bd:true})}
