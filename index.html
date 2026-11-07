@@ -4,20 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Little Fawn Art Studio — Word Studio</title>
-<meta name="description" content="Word Studio — ตารางและชุดฝึกคำศัพท์ไทย/อังกฤษสำหรับเด็ก ๆ ของ Little Fawn Art Studio">
-<meta name="theme-color" content="#fff8e7">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦌%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&family=Itim&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#4a3b52;--paper:#fff8e7;--pink:#ffb3c7;--mint:#a8e6cf;--lemon:#fff1a8;--lav:#cdb4ff;--sky:#a8d8ff;--peach:#ffcba4;--orange:#ff9f43;--red:#ff6b81;--sh:4px 4px 0 rgba(74,59,82,.22)}
 *{box-sizing:border-box;min-width:0}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:'Mali','Itim','Noto Sans Thai',system-ui,sans-serif;color:var(--ink);line-height:1.45;overflow-x:hidden;
- background:radial-gradient(circle at 8% 10%,#ffd6e8 0 90px,transparent 91px),radial-gradient(circle at 92% 18%,#c9f0e0 0 110px,transparent 111px),radial-gradient(circle at 80% 90%,#e3d7ff 0 130px,transparent 131px),radial-gradient(circle at 10% 85%,#fff1a8 0 100px,transparent 101px),var(--paper)}
-@media (hover:hover) and (pointer:fine){body{background-attachment:fixed}}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.28;
+ background:radial-gradient(circle at 8% 10%,#ffd6e8 0 90px,transparent 91px),radial-gradient(circle at 92% 18%,#c9f0e0 0 110px,transparent 111px),radial-gradient(circle at 80% 90%,#e3d7ff 0 130px,transparent 131px),radial-gradient(circle at 10% 85%,#fff1a8 0 100px,transparent 101px),var(--paper);background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.28;mix-blend-mode:multiply;
  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .35  0 0 0 0 .35  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 body.noscroll{overflow:hidden}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -98,7 +93,7 @@ h2{font-size:1.35rem;margin-bottom:10px}h2 small{font-size:.8rem;opacity:.7;font
 .toolbar .inp{width:auto}
 .segc{display:inline-flex;border:3px solid var(--ink);border-radius:14px;overflow:hidden;background:#fff}
 .segc button,.segc label{border:0;background:#fff;padding:.3em .9em;cursor:pointer;font-weight:700}
-.segc .on,.segc label:has(input:checked){background:var(--lemon)}.segc label{position:relative}.segc input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}.segc label:has(input:focus-visible){outline:3px solid var(--orange);outline-offset:-3px}
+.segc .on,.segc label:has(input:checked){background:var(--lemon)}.segc input{display:none}
 .daystrip{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
 .off{background:#fff;border-style:dashed;padding:10px;margin-top:16px}
 .off h3{margin-bottom:6px}.offgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
@@ -126,11 +121,12 @@ h2{font-size:1.35rem;margin-bottom:10px}h2 small{font-size:.8rem;opacity:.7;font
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:8px}
 label.f,div.f{display:grid;gap:3px;font-weight:700;font-size:.9rem;margin-bottom:8px}label.f .inp{font-weight:400}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row.end{justify-content:flex-end}
-
-
+.irow{display:grid;grid-template-columns:auto 80px minmax(0,1.1fr) minmax(0,1.2fr) minmax(0,1fr) auto;gap:6px;align-items:center;margin-bottom:6px;padding:6px;border:2px dashed #cbbcd3;border-radius:12px;background:#fff}
+.irow.dup{background:#ffe1e6;border-color:var(--red)}.irow input[type=checkbox]{width:20px;height:20px}
+.prev{max-width:100%;max-height:200px;border:3px solid var(--ink);border-radius:14px;display:block;margin:8px 0}
 .full{max-width:100%;border:3px solid var(--ink);border-radius:14px}
 .spin{display:inline-block;width:18px;height:18px;border:4px solid var(--ink);border-top-color:var(--orange);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
-.badge{display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:0 10px;font-size:.78rem;background:var(--mint)}
+.badge{display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:0 10px;font-size:.78rem;background:var(--mint)}.badge.ocr{background:var(--peach)}
 .slist{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:8px}.slist li{display:flex;gap:10px;align-items:center;border:2px solid var(--ink);border-radius:14px;padding:6px 8px;background:#fff}.slist li div{flex:1;display:flex;flex-direction:column}.slist small{opacity:.7}
 .slist li input[type=checkbox]{width:20px;height:20px;flex:none}
 .sform{border-top:3px dashed var(--ink);padding-top:10px;display:grid;gap:8px}
@@ -156,7 +152,7 @@ details.sheet-help summary{cursor:pointer;font-weight:700}
 @media (max-width:700px){
  #app{padding:8px 8px 80px}.brand h1{font-size:1.2rem}.actions{width:100%}.actions .btn{flex:1 1 auto;padding:.4em .6em}
  .wk-grid{grid-template-columns:1fr}.overlay{align-items:flex-end;padding:0}.dialog{border-radius:24px 24px 0 0;max-height:94dvh;width:100%}
- 
+ .irow{grid-template-columns:auto 1fr auto}.irow>select{grid-column:2}.irow>input.inp{grid-column:1/-1}.irow>button{grid-column:3;grid-row:1}
  .tbl thead{display:none}.tbl,.tbl tbody,.tbl tr,.tbl td{display:block;width:100%}.tbl tr{border-top:3px solid var(--ink);padding:6px 4px}
  .tbl td{border:0;display:flex;justify-content:space-between;gap:10px;padding:2px 6px;text-align:right}.tbl td::before{content:attr(data-label);font-weight:700;text-align:left;opacity:.7;flex:none}.tbl td.acts{justify-content:flex-end}.tbl td.acts::before{content:""}
  .tl-card{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.missions{grid-template-columns:repeat(2,1fr)}
@@ -169,23 +165,16 @@ details.sheet-help summary{cursor:pointer;font-weight:700}
 .pl-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-top:8px}
 .pl-nav,.pl-main{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.pl-main{margin-left:auto;justify-content:flex-end}
 @media (max-width:700px){.pl-nav,.pl-main{flex:1 1 100%}.pl-main{margin-left:0}.pl-nav .btn,.pl-main .btn{flex:1 1 auto}}
-.dialog:focus{outline:none}
-/* v3.7: safe-area (รอยบาก/แถบ home) */
-body{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
-#app{padding-top:max(12px,env(safe-area-inset-top,0px));padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))}
-#toasts{bottom:calc(14px + env(safe-area-inset-bottom,0px))}
-.dialog{padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
 </style>
 </head>
 <body>
 <div id="app"><div id="hdr"></div><main id="view"></main></div>
-<div id="modals"></div><div id="toasts" role="status" aria-live="polite"></div>
+<div id="modals"></div><div id="toasts"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 'use strict';
-/* v3.7: ลบโค้ดสแกนรูปที่เลิกใช้, กรอง/ตรวจข้อมูลนำเข้า, ปรับ accessibility + มือถือ, ปิดปุ่มสมัครบัญชี (ALLOW_SIGNUP) */
 /* ====== Utils ====== */
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -212,33 +201,6 @@ const WEEK_TARGETS={th:DAY_TARGETS.th*5,en:DAY_TARGETS.en*5};
 const WEEK_MAX=WEEK_TARGETS.th+WEEK_TARGETS.en;
 const LANG_LABEL={th:'ไทย',en:'EN'};
 console.assert(weekStart('2025-09-26')==='2025-09-22'&&dow('2025-09-27')===5&&addDays('2025-12-31',1)==='2026-01-01','date helpers self-check');
-
-/* ====== Data sanitizers (v3.7): กรองข้อมูลจาก JSON นำเข้า / Firestore ก่อนใช้งาน ====== */
-const SAFE_ID=/^[^\s"'<>&`\\\/]{1,100}$/;
-const safeColor=c=>/^#[0-9a-fA-F]{3,8}$/.test(String(c||''))?String(c):COLORS[0];
-const safeImg=u=>typeof u==='string'&&/^data:image\/(?:png|jpe?g|gif|webp);base64,[A-Za-z0-9+\/=]+$/.test(u)?u:'';
-const okDate=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&fmt(parse(s))===s;
-const clip=(v,n)=>String(v??'').slice(0,n);
-const timeNum=v=>Number.isFinite(+v)&&+v>0?+v:Date.now();
-const cleanList=(a,f)=>(Array.isArray(a)?a:[]).map(f).filter(Boolean);
-function cleanStudent(x){
- if(!x||typeof x!=='object'||!SAFE_ID.test(String(x.id||''))||!String(x.name||'').trim())return null;
- return {...x,id:String(x.id),name:clip(x.name,60),level:clip(x.level,60),color:safeColor(x.color),emoji:[...String(x.emoji||'🦌')].slice(0,16).join(''),photo:safeImg(x.photo),createdAt:timeNum(x.createdAt)}}
-function cleanWord(x){
- if(!x||typeof x!=='object'||!SAFE_ID.test(String(x.id||''))||!SAFE_ID.test(String(x.sid||''))||!okDate(x.date))return null;
- const text=clip(x.text,200).trim();if(!text)return null;
- const lang=x.lang==='th'||x.lang==='en'?x.lang:(/[\u0E00-\u0E7F]/.test(text)&&!/[A-Za-z]/.test(text)?'th':'en');
- return {...x,id:String(x.id),sid:String(x.sid),date:x.date,lang,text,meaning:clip(x.meaning,300),reading:clip(x.reading,300),hard:!!x.hard,source:clip(x.source||'manual',40),imageId:SAFE_ID.test(String(x.imageId||''))?String(x.imageId):'',createdAt:timeNum(x.createdAt)}}
-function cleanDrill(x){
- if(!x||typeof x!=='object'||!SAFE_ID.test(String(x.id||''))||!SAFE_ID.test(String(x.sid||'')))return null;
- const ids=a=>(Array.isArray(a)?a:[]).map(String).filter(i=>SAFE_ID.test(i));
- const base={...x,id:String(x.id),sid:String(x.sid),createdAt:timeNum(x.createdAt)};
- if(Array.isArray(x.sets)){
-  const days=(Array.isArray(x.days)?x.days:[]).filter(okDate).sort();
-  if(!days.length)return null;
-  return {...base,days,lang:x.lang==='th'?'th':x.lang==='en'?'en':'',perSet:Math.max(1,Math.min(50,Math.round(+x.perSet)||15)),poolSize:Math.max(0,+x.poolSize||0),skipped:Math.max(0,+x.skipped||0),sets:x.sets.map(s=>({wordIds:ids(s&&s.wordIds)})).filter(s=>s.wordIds.length)}}
- const d=okDate(x.date)?x.date:fmt(new Date(base.createdAt));
- return {...base,kind:x.kind==='hard'?'hard':'practice',date:d,from:okDate(x.from)?x.from:d,to:okDate(x.to)?x.to:d,wordIds:ids(x.wordIds)}}
 
 /* ====== Database (IndexedDB, in-memory fallback) ====== */
 const DB={db:null,mem:null,stores:['students','words','drills','images','full','settings'],
@@ -331,7 +293,7 @@ const cur=()=>stu(ui.sid)||S.students[0];
 const dayWords=(sid,d)=>S.words.filter(w=>w.sid===sid&&w.date===d).sort((a,b)=>a.createdAt-b.createdAt);
 const rangeWords=(sid,a,b)=>S.words.filter(w=>w.sid===sid&&w.date>=a&&w.date<=b);
 const newStudent=(name,level,color,emoji,photo)=>({id:uid(),name,level,color,emoji,photo:photo||'',createdAt:Date.now()});
-const avatar=(s,sz='')=>`<span class="av ${sz}" style="--c:${safeColor(s.color)}">${safeImg(s.photo)?`<img src="${safeImg(s.photo)}" alt="">`:esc(s.emoji||s.name[0])}</span>`;
+const avatar=(s,sz='')=>`<span class="av ${sz}" style="--c:${s.color}">${s.photo?`<img src="${s.photo}" alt="">`:esc(s.emoji||s.name[0])}</span>`;
 function dayCounts(sid,d,list){
  const L=list||dayWords(sid,d),th=L.filter(w=>w.lang==='th').length,en=L.filter(w=>w.lang==='en').length;
  const remainTh=Math.max(0,DAY_TARGETS.th-th),remainEn=Math.max(0,DAY_TARGETS.en-en);
@@ -354,8 +316,8 @@ function openModal(render,o={}){
  const dlg=document.createElement('div');dlg.className='dialog '+(o.cls||'');dlg.innerHTML=render();el.appendChild(dlg);
  const m={el,dlg,render,live:!!o.live,res:null};
  el.addEventListener('mousedown',e=>{if(e.target===el&&o.bd)closeModal(m)});
- m.prev=document.activeElement;dlg.setAttribute('role','dialog');dlg.setAttribute('aria-modal','true');dlg.tabIndex=-1;$('#modals').appendChild(el);M.push(m);document.body.classList.add('noscroll');if(!dlg.contains(document.activeElement))dlg.focus({preventScroll:true});return m}
-function closeModal(m){const i=M.indexOf(m);if(i<0)return;M.splice(i,1);m.el.remove();if(m.res)m.res(false);if(!M.length)document.body.classList.remove('noscroll');try{if(m.prev&&m.prev!==document.body&&document.contains(m.prev))m.prev.focus({preventScroll:true})}catch{}}
+ $('#modals').appendChild(el);M.push(m);document.body.classList.add('noscroll');return m}
+function closeModal(m){const i=M.indexOf(m);if(i<0)return;M.splice(i,1);m.el.remove();if(m.res)m.res(false);if(!M.length)document.body.classList.remove('noscroll')}
 const modalOf=el=>M.find(m=>m.el.contains(el));
 function ask(title,msg,ok='ลบเลย'){return new Promise(res=>{const m=openModal(()=>`<h3>${esc(title)}</h3><p>${msg}</p><div class="row end"><button class="btn" data-act="ask-no">ยกเลิก</button><button class="btn danger" data-act="ask-yes">${esc(ok)}</button></div>`,{cls:'small',bd:true});m.res=res})}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&M.length)closeModal(M[M.length-1])});
@@ -373,7 +335,7 @@ function headerHTML(){
  return `<div class="top"><div class="brand"><span class="logo">🏠</span><div><h1>Little Fawn Art Studio</h1><p>Word Studio v3.7 • ศูนย์รวมคำศัพท์ของหนู ๆ</p></div></div>
  <div class="actions"><button class="btn orange" data-act="sheet-import">📋 นำเข้าจาก Sheets</button><button class="btn mint" data-act="add-word">➕ เพิ่มคำศัพท์</button><button class="btn lav" data-act="mgr">👧 นักเรียน</button></div></div>
  <nav class="tabs">${tabs.map(([k,l])=>`<button class="tab ${ui.tab===k?'on':''}" data-act="tab" data-t="${k}">${l}</button>`).join('')}</nav>
- <div class="stubar">${S.students.map(s=>`<button class="chip ${s.id===ui.sid?'on':''}" style="--c:${safeColor(s.color)}" data-act="pick-stu" data-id="${s.id}">${avatar(s,'sm')}${esc(s.name)}</button>`).join('')}</div>`}
+ <div class="stubar">${S.students.map(s=>`<button class="chip ${s.id===ui.sid?'on':''}" style="--c:${s.color}" data-act="pick-stu" data-id="${s.id}">${avatar(s,'sm')}${esc(s.name)}</button>`).join('')}</div>`}
 
 function wcard(w,o={}){
  const s=o.stu?stu(w.sid):null;
@@ -387,11 +349,11 @@ function wcard(w,o={}){
 function stuCard(s,cw){
  const days=[0,1,2,3,4].map(i=>{const d=addDays(cw,i),L=dayWords(s.id,d),w=L.find(x=>x.imageId&&S.thumbs[x.imageId]);
   return `<div class="tile ${L.length?'has':''}" title="${fdate(d)}">${w?`<img src="${S.thumbs[w.imageId]}" alt="">`:`<span>${L[0]?esc(L[0].text):'–'}</span>`}<em>${TH_SHORT[i]}</em></div>`}).join('');
- return `<article class="scard ${s.id===ui.sid?'sel':''}" style="--c:${safeColor(s.color)}" data-act="pick-stu" data-id="${s.id}" role="button" tabindex="0">${avatar(s,'lg')}<div class="si"><h3>${esc(s.name)}</h3><p>${esc(s.level||'')}</p></div><div class="tiles">${days}</div>${progressHTML(s.id,cw)}<button class="btn small" data-act="go-week" data-id="${s.id}">📅 ดูตารางของ ${esc(s.name)}</button></article>`}
+ return `<article class="scard ${s.id===ui.sid?'sel':''}" style="--c:${s.color}" data-act="pick-stu" data-id="${s.id}">${avatar(s,'lg')}<div class="si"><h3>${esc(s.name)}</h3><p>${esc(s.level||'')}</p></div><div class="tiles">${days}</div>${progressHTML(s.id,cw)}<button class="btn small" data-act="go-week" data-id="${s.id}">📅 ดูตารางของ ${esc(s.name)}</button></article>`}
 function missionHTML(){
  const cw=weekStart(today()),t=today();
  return [0,1,2,3,4].map(i=>{const d=addDays(cw,i),L=dayWords(ui.sid,d),c=dayCounts(ui.sid,d,L);
-  return `<div class="mcard ${c.complete?'done':L.length?'has':'vac'} ${d===t?'today':''}" data-act="mission" data-date="${d}" data-day="${d}" role="button" tabindex="0"><div class="mh"><b>${TH_DAYS[i]}</b><span>${fdate(d)}</span></div><div class="mc">${c.total}/${DAY_MAX}</div><div class="mtarget"><span class="${c.th>=DAY_TARGETS.th?'done':''}">ไทย ${c.th}/${DAY_TARGETS.th}${c.th>=DAY_TARGETS.th?' ✓':''}</span><span class="${c.en>=DAY_TARGETS.en?'done':''}">EN ${c.en}/${DAY_TARGETS.en}${c.en>=DAY_TARGETS.en?' ✓':''}</span></div><div class="mw">${L.slice(0,3).map(w=>`<i>${esc(w.text)}</i>`).join('')}</div><div class="mt">${c.complete?'ครบเป้าหมายวันนี้แล้ว 🎉 แตะเพื่อดูคำศัพท์':L.length?`เหลือ ไทย ${c.remainTh} • EN ${c.remainEn}`:`เป้าหมาย ไทย ${DAY_TARGETS.th} • EN ${DAY_TARGETS.en} — แตะเพื่อเพิ่ม`}</div></div>`}).join('')}
+  return `<div class="mcard ${c.complete?'done':L.length?'has':'vac'} ${d===t?'today':''}" data-act="mission" data-date="${d}" data-day="${d}"><div class="mh"><b>${TH_DAYS[i]}</b><span>${fdate(d)}</span></div><div class="mc">${c.total}/${DAY_MAX}</div><div class="mtarget"><span class="${c.th>=DAY_TARGETS.th?'done':''}">ไทย ${c.th}/${DAY_TARGETS.th}${c.th>=DAY_TARGETS.th?' ✓':''}</span><span class="${c.en>=DAY_TARGETS.en?'done':''}">EN ${c.en}/${DAY_TARGETS.en}${c.en>=DAY_TARGETS.en?' ✓':''}</span></div><div class="mw">${L.slice(0,3).map(w=>`<i>${esc(w.text)}</i>`).join('')}</div><div class="mt">${c.complete?'ครบเป้าหมายวันนี้แล้ว 🎉 แตะเพื่อดูคำศัพท์':L.length?`เหลือ ไทย ${c.remainTh} • EN ${c.remainEn}`:`เป้าหมาย ไทย ${DAY_TARGETS.th} • EN ${DAY_TARGETS.en} — แตะเพื่อเพิ่ม`}</div></div>`}).join('')}
 function timelineHTML(){
  const L=S.words.filter(w=>(w.imageId||['image','gemini-app','google-sheets','sheet'].includes(w.source))&&(ui.tlAll||w.sid===ui.sid)).sort((a,b)=>b.createdAt-a.createdAt);
  const head=`<div class="row" style="margin-bottom:8px"><div class="segc"><button class="${!ui.tlAll?'on':''}" data-act="tl-all" data-v="0">เฉพาะ ${esc(cur().name)}</button><button class="${ui.tlAll?'on':''}" data-act="tl-all" data-v="1">ทุกคน</button></div></div>`;
@@ -400,7 +362,7 @@ function timelineHTML(){
  L.slice(0,ui.tlN).forEach(w=>{const s=stu(w.sid);
   if(w.date!==last){last=w.date;html+=`<li class="tl-date">${TH_DAYS[dow(w.date)]} ${fdateY(w.date)}</li>`}
   const th=w.imageId&&S.thumbs[w.imageId];
-  html+=`<li><span class="dot" style="--c:${safeColor(s?s.color:'#ffb3c7')}"></span><div class="tl-card">${th?`<img class="tlimg" src="${th}" alt="ดูภาพต้นทาง" data-act="view" data-id="${w.id}" role="button" tabindex="0">`:'<span class="tlimg no"></span>'}<div>${wcard(w,{stu:true})}<div class="tl-meta">บันทึกเมื่อ ${new Date(w.createdAt).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})}</div></div></div></li>`});
+  html+=`<li><span class="dot" style="--c:${s?s.color:'#ffb3c7'}"></span><div class="tl-card">${th?`<img class="tlimg" src="${th}" alt="" data-act="view" data-id="${w.id}">`:'<span class="tlimg no"></span>'}<div>${wcard(w,{stu:true})}<div class="tl-meta">บันทึกเมื่อ ${new Date(w.createdAt).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})}</div></div></div></li>`});
  return head+`<ul class="tl">${html}</ul>${L.length>ui.tlN?`<div class="row" style="margin-top:8px"><button class="btn small" data-act="tl-more">ดูเพิ่ม (${L.length-ui.tlN})</button></div>`:''}`}
 function histRows(full){
  const q=ui.q.trim().toLowerCase();
@@ -570,14 +532,14 @@ function viewDrill(){
  <section class="sec"><h2>🗂️ ชุดที่สร้างแล้ว</h2><div class="tblwrap"><table class="tbl"><thead><tr><th>สร้างเมื่อ</th><th>ประเภท</th><th>วันที่เลือก</th><th>จำนวน</th><th></th></tr></thead><tbody>
  ${rows||'<tr><td colspan="5" class="empty">ยังไม่มีชุดที่สร้าง</td></tr>'}</tbody></table></div></section>`}
 function openDrill(id){
- openModal(()=>{const d=S.drills.find(x=>x.id===id);if(!d)return `<div class="dh"><h3>ไม่พบชุดนี้</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div>`;
+ openModal(()=>{const d=S.drills.find(x=>x.id===id);if(!d)return `<div class="dh"><h3>ไม่พบชุดนี้</h3><button class="x" data-act="close">✖</button></div>`;
   const isNew=!!d.sets,sets=d.sets||[{wordIds:d.wordIds||[]}];
   const title=isNew?`🎲 ชุดฝึกคำยาก ป.3 • ${fdateY(fmt(new Date(d.createdAt)))}`:`${d.kind==='hard'?'⭐ ทดสอบคำยาก':'🎲 สุ่มฝึก'} • ${TH_DAYS[dow(d.date)]} ${fdate(d.date)}`;
   const info=isNew?`${d.lang?'ภาษา '+(LANG_LABEL[d.lang]||d.lang)+' • ':'ชุดเดิม (รวมภาษา) • '}เลือกจาก ${d.days.length} วัน (${fdate(d.days[0])}–${fdate(d.days[d.days.length-1])}) • คำทั้งหมดในวันที่เลือก ${d.poolSize} คำ${d.skipped?` • ข้าม ${d.skipped} วัน (เกินโควตา)`:''}`:`ช่วงคำ ${fdate(d.from)}–${fdate(d.to)}`;
-  return `<div class="dh"><h3>${title}</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div>
+  return `<div class="dh"><h3>${title}</h3><button class="x" data-act="close">✖</button></div>
   <p>${info}</p><div class="row" style="margin-bottom:8px"><button class="btn small ${ui.hide?'on':''}" data-act="drill-hide">${ui.hide?'🙈 โหมดทาย: แตะการ์ดเพื่อดูเฉลย':'👀 แสดงคำแปลทั้งหมด'}</button>${isNew?`<button class="btn small sky" data-act="dr-regen" data-id="${d.id}">🔄 สุ่มชุดใหม่ (วันเดิม${d.lang?' • '+(LANG_LABEL[d.lang]||d.lang):' • EN สำหรับชุดเดิม'})</button>`:''}</div>
   ${sets.map((st,i)=>{const L=st.wordIds.map(x=>S.words.find(w=>w.id===x)).filter(Boolean),nd=new Set(L.map(w=>w.date)).size;
-   return `<div class="dset"><h4>ชุดที่ ${i+1} <span class="badge">${L.length} คำ</span> <small>จาก ${nd} วัน</small></h4><div class="row" style="margin:6px 0"><button class="btn small orange" data-act="play-set" data-id="${d.id}" data-i="${i}">▶️ เล่นแฟลชการ์ดชุดนี้</button></div><div class="dgrid">${L.map(w=>`<div class="dcard ${ui.hide?'hide':''}" data-act="flip" role="button" tabindex="0">${wcard(w,{noact:true,date:true})}</div>`).join('')||'<p class="empty">ไม่มีคำในชุดนี้</p>'}</div></div>`}).join('')}`},{live:true,bd:true})}
+   return `<div class="dset"><h4>ชุดที่ ${i+1} <span class="badge">${L.length} คำ</span> <small>จาก ${nd} วัน</small></h4><div class="row" style="margin:6px 0"><button class="btn small orange" data-act="play-set" data-id="${d.id}" data-i="${i}">▶️ เล่นแฟลชการ์ดชุดนี้</button></div><div class="dgrid">${L.map(w=>`<div class="dcard ${ui.hide?'hide':''}" data-act="flip">${wcard(w,{noact:true,date:true})}</div>`).join('')||'<p class="empty">ไม่มีคำในชุดนี้</p>'}</div></div>`}).join('')}`},{live:true,bd:true})}
 
 
 function freeGuideHTML(){
@@ -615,9 +577,9 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(
 document.addEventListener('submit',e=>{const f=e.target.dataset.submit;if(f&&A[f]){e.preventDefault();guard(A[f],e.target)}});
 document.addEventListener('change',e=>{const t=e.target;if(t.dataset.change&&C[t.dataset.change])guard(C[t.dataset.change],t);
  if(t.dataset.cfg){const c=normalizeCfg(),f=t.dataset.cfg,v=t.value.trim();c[f]=v;if(f==='key')c.keys[c.provider]=v;if(f==='base'&&c.provider!=='gemini')c.bases[c.provider]=v;DB.put('settings',{id:'cfg',...c})}
- if(t.dataset.simp)sheetImpSet(t,true);
- if(t.name==='lang'&&t.closest('.wf')){const fm=t.closest('form');$$('.segc label',fm).forEach(l=>l.classList.toggle('on',!!(l.querySelector('input')||{}).checked));wfLabels(fm)}});
-document.addEventListener('input',e=>{const t=e.target;if(t.dataset.input&&I[t.dataset.input])I[t.dataset.input](t);if(t.dataset.simp&&t.type!=='checkbox'&&t.tagName!=='SELECT')sheetImpSet(t,false)});
+ if(t.dataset.imp)impSet(t);if(t.dataset.impf&&imp)imp[t.dataset.impf]=t.value;if(t.dataset.simp)sheetImpSet(t,true);
+ if(t.name==='lang'&&t.closest('.wf'))wfLabels(t.closest('form'))});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.input&&I[t.dataset.input])I[t.dataset.input](t);if(t.dataset.imp&&t.type!=='checkbox'&&t.tagName!=='SELECT')impSet(t);if(t.dataset.simp&&t.type!=='checkbox'&&t.tagName!=='SELECT')sheetImpSet(t,false)});
 I.hq=el=>{ui.q=el.value;$$('.hist-body').forEach(b=>b.innerHTML=histRows(b.dataset.full==='1'))};
 C.hstu=el=>{ui.fstu=el.value;render()};C.hlang=el=>{ui.flang=el.value;render()};C.hhard=el=>{ui.fhard=el.checked;render()};
 C.nweeks=el=>{ui.nweeks=+el.value;render()};
@@ -633,9 +595,9 @@ A['pick-day']=el=>{ui.day=el.dataset.date;render()};
 A['wk-prev']=()=>{if(ui.tab==='week'&&ui.mode==='day'){ui.day=addDays(ui.day,-1);ui.ws=weekStart(ui.day)}else{ui.ws=addDays(ui.ws,-7);ui.day=ui.ws}render()};
 A['wk-next']=()=>{if(ui.tab==='week'&&ui.mode==='day'){ui.day=addDays(ui.day,1);ui.ws=weekStart(ui.day)}else{ui.ws=addDays(ui.ws,7);ui.day=ui.ws}render()};
 A['wk-today']=()=>{ui.ws=weekStart(today());ui.day=today();render()};
-A.mission=el=>{const d=el.dataset.date;if(dayWords(ui.sid,d).length)openDay(d);else openSheetImport({dataset:{date:d,sid:ui.sid}})};
+A.mission=el=>{const d=el.dataset.date;if(dayWords(ui.sid,d).length)openDay(d);else openWordForm({date:d})};
 function openDay(d){const sid=ui.sid;openModal(()=>{const L=dayWords(sid,d),c=dayCounts(sid,d,L);
- return `<div class="dh"><h3>${TH_DAYS[dow(d)]} ${fdateY(d)} • ${esc(stu(sid)?.name||'')}</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div><p>รวม ${c.total}/${DAY_MAX} คำ • ${dayTargetText(c)}${c.complete?' • ครบเป้าหมายแล้ว 🎉':` • เหลือ ไทย ${c.remainTh} + EN ${c.remainEn}`}</p>
+ return `<div class="dh"><h3>${TH_DAYS[dow(d)]} ${fdateY(d)} • ${esc(stu(sid)?.name||'')}</h3><button class="x" data-act="close">✖</button></div><p>รวม ${c.total}/${DAY_MAX} คำ • ${dayTargetText(c)}${c.complete?' • ครบเป้าหมายแล้ว 🎉':` • เหลือ ไทย ${c.remainTh} + EN ${c.remainEn}`}</p>
  <div class="offgrid" data-day="${d}">${L.map(w=>wcard(w)).join('')||'<p class="empty">ยังว่าง</p>'}</div><div class="row end" style="margin-top:10px"><button class="btn sky" data-act="sheet-import" data-date="${d}" data-sid="${sid}">📋 นำเข้าจาก Sheets (วันนี้)</button><button class="btn mint" data-act="add-word" data-date="${d}" data-sid="${sid}">➕ เพิ่มคำศัพท์</button></div>`},{live:true,bd:true})}
 A.close=el=>{const m=modalOf(el);if(m)closeModal(m)};
 A['ask-yes']=el=>{const m=modalOf(el);m.res(true);closeModal(m)};A['ask-no']=el=>closeModal(modalOf(el));
@@ -658,9 +620,9 @@ function plNavHTML(){
 function playerHTML(){
  if(!pl)return '<p class="empty">ไม่มีชุดที่กำลังเล่นอยู่</p>';
  const total=pl.list.length,st=plStats();
- if(pl.idx>=total)return `<div class="dh"><h3>🏆 จบชุดแล้ว!</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div><div class="flash"><div><div style="font-size:52px">🌟</div><div class="fw" style="font-size:2rem">${st.left?'ถึงท้ายชุดแล้ว':'เก่งมาก!'}</div><div class="fa">จำได้แล้ว ${st.known}/${total} คำ • ยังยากอีก ${st.unknown} คำ${st.left?` • ยังไม่ตอบ ${st.left} คำ`:''}<br>${st.left?'กด “⬅️ ย้อนกลับ” เพื่อกลับไปทบทวนหรือตอบคำที่ข้ามไปได้':'คำที่กด “ยังยากอยู่” ถูกทำเครื่องหมาย ⭐ คำยาก ไว้ทบทวนต่อให้แล้ว'}</div></div></div><div class="pl-actions">${plNavHTML()}<div class="pl-main"><button class="btn" data-act="close">ปิด</button><button class="btn orange" data-act="pl-restart">↺ เล่นอีกครั้ง</button></div></div>`;
+ if(pl.idx>=total)return `<div class="dh"><h3>🏆 จบชุดแล้ว!</h3><button class="x" data-act="close">✖</button></div><div class="flash"><div><div style="font-size:52px">🌟</div><div class="fw" style="font-size:2rem">${st.left?'ถึงท้ายชุดแล้ว':'เก่งมาก!'}</div><div class="fa">จำได้แล้ว ${st.known}/${total} คำ • ยังยากอีก ${st.unknown} คำ${st.left?` • ยังไม่ตอบ ${st.left} คำ`:''}<br>${st.left?'กด “⬅️ ย้อนกลับ” เพื่อกลับไปทบทวนหรือตอบคำที่ข้ามไปได้':'คำที่กด “ยังยากอยู่” ถูกทำเครื่องหมาย ⭐ คำยาก ไว้ทบทวนต่อให้แล้ว'}</div></div></div><div class="pl-actions">${plNavHTML()}<div class="pl-main"><button class="btn" data-act="close">ปิด</button><button class="btn orange" data-act="pl-restart">↺ เล่นอีกครั้ง</button></div></div>`;
  const w=pl.list[pl.idx],ans=pl.answers&&pl.answers[pl.idx];
- return `<div class="dh"><h3>▶️ ${esc(pl.title)}</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div>
+ return `<div class="dh"><h3>▶️ ${esc(pl.title)}</h3><button class="x" data-act="close">✖</button></div>
  <div class="row"><b>ข้อ ${pl.idx+1} / ${total}</b><span class="badge">✓ จำได้ ${st.known}</span><span class="badge">⭐ ยังยาก ${st.unknown}</span>${st.left?`<span class="badge gray">ยังไม่ตอบ ${st.left}</span>`:''}</div>
  <div class="flash"><div><div class="fw">${esc(w.text)}</div><div style="margin-top:8px"><span class="badge">${w.lang==='th'?'ภาษาไทย':'English'}</span>${w.hard?' <span class="badge">⭐ คำยาก</span>':''}${ans?` <span class="badge ${ans==='known'?'':'warn'}">ตอบแล้ว: ${ans==='known'?'✓ จำได้':'⭐ ยังยาก'} (แก้ได้)</span>`:''}</div>${pl.flip?`<div class="fa">${esc(w.meaning||'—')}${w.reading?`<br>🗣️ ${esc(w.reading)}`:''}</div>`:'<div class="fa">ลองอ่านออกเสียงและนึกความหมายก่อนดูเฉลยนะ</div>'}</div></div>
  ${pl.flip?`<div class="pl-actions">${plNavHTML()}<div class="pl-main"><button class="btn pink" data-act="pl-unknown">⭐ ยังยากอยู่</button><button class="btn mint" data-act="pl-known">✓ จำได้แล้ว</button></div></div>`:`<div class="pl-actions">${plNavHTML()}<div class="pl-main"><button class="btn sky" data-act="pl-speak">🔊 ฟังเสียง</button><button class="btn orange" data-act="pl-flip">👀 ดูเฉลย</button></div></div>`}`}
@@ -730,13 +692,13 @@ A.del=async el=>{const w=S.words.find(x=>x.id===el.dataset.id);if(!w)return;
 async function removeWords(ids){ids=new Set(ids);const gone=S.words.filter(w=>ids.has(w.id));S.words=S.words.filter(w=>!ids.has(w.id));await DB.del('words',[...ids]);await purgeImages(gone.map(w=>w.imageId).filter(Boolean))}
 async function purgeImages(list){const used=new Set(S.words.map(w=>w.imageId).filter(Boolean));const o=[...new Set(list)].filter(i=>!used.has(i));if(o.length){await DB.del('images',o);await DB.del('full',o);o.forEach(i=>delete S.thumbs[i])}}
 function openView(id){const w=S.words.find(x=>x.id===id);if(!w)return;
- const m=openModal(()=>`<div class="dh"><h3>🔎 ${esc(w.text)}</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div>${wcard(w,{stu:true,noact:true})}<p style="font-size:.85rem">นักเรียน: ${esc(stu(w.sid)?.name||'-')} • วันที่ ${TH_DAYS[dow(w.date)]} ${fdateY(w.date)}</p><div id="vimg">${w.imageId?'<span class="spin"></span> กำลังโหลดรูป…':'<p class="empty">ไม่มีภาพต้นทาง</p>'}</div>`,{bd:true});
- if(w.imageId)DB.get('full',w.imageId).then(r=>r||Sync.fetchFull(w.imageId)).then(r=>{const b=m.dlg.querySelector('#vimg');if(b)b.innerHTML=r&&safeImg(r.data)?`<img class="full" src="${safeImg(r.data)}" alt="ภาพต้นทาง">`:'<p class="empty">ไม่พบรูป</p>'})}
+ const m=openModal(()=>`<div class="dh"><h3>🔎 ${esc(w.text)}</h3><button class="x" data-act="close">✖</button></div>${wcard(w,{stu:true,noact:true})}<p style="font-size:.85rem">นักเรียน: ${esc(stu(w.sid)?.name||'-')} • วันที่ ${TH_DAYS[dow(w.date)]} ${fdateY(w.date)}</p><div id="vimg">${w.imageId?'<span class="spin"></span> กำลังโหลดรูป…':'<p class="empty">ไม่มีภาพต้นทาง</p>'}</div>`,{bd:true});
+ if(w.imageId)DB.get('full',w.imageId).then(r=>r||Sync.fetchFull(w.imageId)).then(r=>{const b=m.dlg.querySelector('#vimg');if(b)b.innerHTML=r?`<img class="full" src="${r.data}" alt="ภาพต้นทาง">`:'<p class="empty">ไม่พบรูป</p>'})}
 A['test-llm']=async()=>{try{const r=await llm('Reply with JSON {"ok":true}');toast(r.ok?`✅ เชื่อมต่อสำเร็จ (โมเดล ${S.lastModel})`:'ตอบกลับแล้วแต่รูปแบบแปลก')}catch(e){toast('❌ '+e.message)}};
 A.sample=async()=>{const s=cur(),d=today();const L=[['apple','แอปเปิล','แอ็ป-เปิ้ล','en'],['banana','กล้วย','บะ-หนา-หน่า','en'],['school','โรงเรียน','สะ-กูล','en'],['rabbit','กระต่าย','แร็บ-บิ๊ท','en'],['butterfly','ผีเสื้อ','บัด-เตอะ-ฟลาย','en'],['elephant','ช้าง','เอ็ล-ละ-เฟินท์','en'],['flower','ดอกไม้','ฟลาว-เออร์','en'],['โรงเรียน','school','โรง-เรียน','th'],['ผีเสื้อ','butterfly','ผี-เสื้อ','th'],['กระต่าย','rabbit','กระ-ต่าย','th'],['ดอกไม้','flower','ดอก-ไม้','th'],['ท้องฟ้า','sky','ท้อง-ฟ้า','th'],['มะม่วง','mango','มะ-ม่วง','th'],['ช้าง','elephant','ช้าง','th'],['บ้าน','house','บ้าน','th'],['หนังสือ','book','หนัง-สือ','th'],['เพื่อน','friend','เพื่อน','th']];
  const add=L.filter(x=>!S.words.some(w=>w.sid===s.id&&w.date===d&&norm(w.text)===norm(x[0]))).map((x,i)=>({id:uid(),sid:s.id,date:d,lang:x[3],text:x[0],meaning:x[1],reading:x[2],hard:i%4===0,source:'manual',createdAt:Date.now()+i}));
  S.words.push(...add);await DB.putMany('words',add);render();toast(`เพิ่มตัวอย่าง ${add.length} คำให้ ${s.name} (เป้าหมาย ไทย ${DAY_TARGETS.th} + EN ${DAY_TARGETS.en})`)};
-A.export=()=>{const b=new Blob([JSON.stringify({students:S.students,words:S.words,drills:S.drills},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`word-studio-${today()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),800)};
+A.export=()=>{const b=new Blob([JSON.stringify({students:S.students,words:S.words,drills:S.drills},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`word-studio-${today()}.json`;a.click()};
 A['export-csv']=()=>{
  const rows=[['วันที่','นักเรียน','คำศัพท์','ภาษา','คำแปล','คำอ่าน','คำยาก','ที่มา','ความมั่นใจ','หมายเหตุตรวจ'],...S.words.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.createdAt-b.createdAt).map(w=>[w.date,(stu(w.sid)||{}).name||'',w.text,w.lang,w.meaning||'',w.reading||'',w.hard?'ยาก':'',w.source||'','',''])];
  const csv='\uFEFF'+rows.map(r=>r.map(c=>'"'+String(c??'').replace(/"/g,'""')+'"').join(',')).join('\n');
@@ -745,14 +707,11 @@ C['import-json']=async el=>{
  const f=el.files&&el.files[0];if(!f)return;
  try{
   const data=JSON.parse(await f.text());
-  const rawS=Array.isArray(data&&data.students)?data.students:[],rawW=Array.isArray(data&&data.words)?data.words:[],rawD=Array.isArray(data&&data.drills)?data.drills:[];
-  const students=cleanList(rawS,cleanStudent);
-  const known=new Set([...S.students.map(s=>s.id),...students.map(s=>s.id)]);
-  const words=cleanList(rawW,cleanWord).filter(w=>known.has(w.sid));
-  const drills=cleanList(rawD,cleanDrill).filter(d=>known.has(d.sid));
-  const skipped=(rawS.length-students.length)+(rawW.length-words.length)+(rawD.length-drills.length);
-  if(!students.length&&!words.length)throw new Error('ไม่พบข้อมูลนักเรียน/คำศัพท์ที่ใช้ได้ในไฟล์นี้');
-  if(!await ask('นำเข้าข้อมูลสำรอง?',`จะเพิ่ม/อัปเดตนักเรียน ${students.length} คน • คำศัพท์ ${words.length} คำ • ชุดฝึก ${drills.length} ชุด${skipped?`<br>⚠️ ข้าม ${skipped} รายการที่ข้อมูลไม่ถูกต้องหรืออ้างนักเรียนที่ไม่มีในระบบ`:''}<br>(รายการที่รหัสซ้ำกับในเครื่องจะอัปเดตทับ ส่วนรูปภาพต้นทางไม่ได้อยู่ในไฟล์ JSON)`,'นำเข้า'))return;
+  const students=Array.isArray(data.students)?data.students.filter(x=>x&&x.id&&x.name):[];
+  const words=Array.isArray(data.words)?data.words.filter(x=>x&&x.id&&x.sid&&x.text&&x.date):[];
+  const drills=Array.isArray(data.drills)?data.drills.filter(x=>x&&x.id&&x.sid):[];
+  if(!students.length&&!words.length)throw new Error('ไม่พบข้อมูลนักเรียน/คำศัพท์ในไฟล์นี้');
+  if(!await ask('นำเข้าข้อมูลสำรอง?',`จะเพิ่ม/อัปเดตนักเรียน ${students.length} คน • คำศัพท์ ${words.length} คำ • ชุดฝึก ${drills.length} ชุด<br>(รายการที่รหัสซ้ำกับในเครื่องจะอัปเดตทับ ส่วนรูปภาพต้นทางไม่ได้อยู่ในไฟล์ JSON)`,'นำเข้า'))return;
   if(students.length)await DB.putMany('students',students);
   if(words.length)await DB.putMany('words',words);
   if(drills.length)await DB.putMany('drills',drills);
@@ -772,10 +731,10 @@ function wfLabels(form){const en=form.elements.lang.value==='en';
 function openWordForm(o={}){
  const w=o.word,edit=!!w;
  const d=w||{id:'',sid:o.sid||ui.sid,lang:'en',text:'',meaning:'',reading:'',date:o.date||today(),hard:false};
- const m=openModal(()=>`<div class="dh"><h3>${edit?'✏️ แก้ไขคำศัพท์':'➕ เพิ่มคำศัพท์'}</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div>
+ const m=openModal(()=>`<div class="dh"><h3>${edit?'✏️ แก้ไขคำศัพท์':'➕ เพิ่มคำศัพท์'}</h3><button class="x" data-act="close">✖</button></div>
  <form class="wf" data-submit="save-word"><input type="hidden" name="id" value="${d.id}">
  <div class="grid2"><label class="f">นักเรียน<select class="inp" name="sid" ${edit?'disabled':''}>${S.students.map(s=>`<option value="${s.id}" ${s.id===d.sid?'selected':''}>${esc(s.name)}</option>`).join('')}</select></label>
- <div class="f">ภาษา<div class="segc"><label class="${d.lang==='en'?'on':''}"><input type="radio" name="lang" value="en" ${d.lang==='en'?'checked':''}>🔤 อังกฤษ</label><label class="${d.lang==='th'?'on':''}"><input type="radio" name="lang" value="th" ${d.lang==='th'?'checked':''}>ก ไทย</label></div></div></div>
+ <div class="f">ภาษา<div class="segc"><label><input type="radio" name="lang" value="en" ${d.lang==='en'?'checked':''}>🔤 อังกฤษ</label><label><input type="radio" name="lang" value="th" ${d.lang==='th'?'checked':''}>ก ไทย</label></div></div></div>
  <label class="f">คำศัพท์<input class="inp" name="text" value="${esc(d.text)}" required maxlength="80" autocomplete="off" ${edit||matchMedia('(pointer:coarse)').matches?'':'autofocus'}></label>
  <label class="f"><span data-l="meaning"></span><input class="inp" name="meaning" value="${esc(d.meaning)}" maxlength="120"></label>
  <label class="f"><span data-l="reading"></span><input class="inp" name="reading" value="${esc(d.reading)}" maxlength="120"></label>
@@ -786,9 +745,9 @@ function openWordForm(o={}){
  wfLabels(m.dlg.querySelector('form'));
 }
 A['auto-fill']=async el=>{const f=el.closest('form'),text=f.elements.text.value.trim();if(!text)return toast('พิมพ์คำศัพท์ก่อนนะ');
- const it={lang:f.elements.lang.value,text,meaning:f.elements.meaning.value.trim(),reading:f.elements.reading.value.trim()},hadReading=!!it.reading;
+ const it={lang:f.elements.lang.value,text,meaning:f.elements.meaning.value.trim(),reading:f.elements.reading.value.trim()};
  el.disabled=true;el.textContent='⏳ กำลังเติม…';
- try{await fillMissing([it]);f.elements.meaning.value=it.meaning;f.elements.reading.value=it.reading;if(!it.meaning&&!it.reading)toast(SHOW_API_UI?'ไม่พบข้อมูล ลองใส่ API key ในตั้งค่าหรือพิมพ์เอง':'ไม่พบข้อมูล กรุณาพิมพ์คำแปล/คำอ่านเอง');else if(it.lang==='th'&&it.reading&&!hadReading)toast('แบ่งตามคำให้เท่านั้น ไม่ใช่พยางค์ — ตรวจและแก้คำอ่านเองด้วยนะ')}finally{el.disabled=false;el.textContent='✨ เติมคำแปล/คำอ่านอัตโนมัติ'}};
+ try{await fillMissing([it]);f.elements.meaning.value=it.meaning;f.elements.reading.value=it.reading;if(!it.meaning&&!it.reading)toast(SHOW_API_UI?'ไม่พบข้อมูล ลองใส่ API key ในตั้งค่าหรือพิมพ์เอง':'ไม่พบข้อมูล กรุณาพิมพ์คำแปล/คำอ่านเอง')}finally{el.disabled=false;el.textContent='✨ เติมคำแปล/คำอ่านอัตโนมัติ'}};
 function findDup(sid,text,date,ignoreId){const ws=weekStart(date),n=norm(text);return S.words.find(w=>w.sid===sid&&w.id!==ignoreId&&norm(w.text)===n&&w.date>=ws&&w.date<=addDays(ws,6))}
 A['save-word']=async form=>{
  const dlg=form.closest('.dialog'),m=modalOf(form),fd=new FormData(form),id=fd.get('id');
@@ -809,7 +768,7 @@ A['save-word']=async form=>{
 
 /* ====== Student manager ====== */
 const mgr={color:COLORS[0],emoji:EMOJIS[0],photo:''};
-function mgrHTML(){return `<div class="dh"><h3>👧 จัดการนักเรียน</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div>
+function mgrHTML(){return `<div class="dh"><h3>👧 จัดการนักเรียน</h3><button class="x" data-act="close">✖</button></div>
  <ul class="slist">${S.students.map(s=>`<li>${avatar(s)}<div><b>${esc(s.name)}</b><small>${esc(s.level||'')} • ${S.words.filter(w=>w.sid===s.id).length} คำ</small></div><button class="ib del" data-act="stu-del" data-id="${s.id}" ${S.students.length<=1?'disabled title="ลบนักเรียนคนสุดท้ายไม่ได้"':'title="ลบนักเรียน"'}>🗑️</button></li>`).join('')}</ul>
  ${S.students.length<=1?'<div class="note">ต้องมีนักเรียนอย่างน้อย 1 คน จึงลบคนสุดท้ายไม่ได้</div>':''}
  <form class="sform" data-submit="stu-add"><h4>➕ เพิ่มนักเรียนใหม่</h4>
@@ -841,6 +800,7 @@ A['stu-del']=async el=>{
 /* ====== Images ====== */
 function loadImage(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>rej(new Error('เปิดรูปไม่ได้'));im.src=fr.result};fr.onerror=()=>rej(new Error('อ่านไฟล์ไม่ได้'));fr.readAsDataURL(file)})}
 function scale(im,max,q){const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);return c.toDataURL('image/jpeg',q)}
+function loadScript(src){return new Promise((res,rej)=>{if($(`script[src="${src}"]`))return res();const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('โหลด OCR ไม่ได้ (ต้องออนไลน์)'));document.head.appendChild(s)})}
 
 /* ====== Vision (LLM) + OCR fallback ====== */
 function parseJSON(t){t=String(t).replace(/^\s*```(?:json)?/i,'').replace(/```\s*$/,'').trim();try{return JSON.parse(t)}catch{const m=t.match(/[\[{][\s\S]*[\]}]/);if(m)return JSON.parse(m[0]);throw new Error('ผลลัพธ์ไม่ใช่ JSON')}}
@@ -940,8 +900,33 @@ A['mdl-add']=()=>{const v=($('#mdl-new').value||'').trim().replace(/^models\//,'
 A['mdl-reset']=()=>{if(S.cfg.models)delete S.cfg.models[S.cfg.provider];S.cfg.model='';saveCfg();render()};
 A['mdl-clear']=()=>{Object.keys(cool).forEach(k=>delete cool[k]);render();toast('ล้างสถานะโควตาแล้ว')};
 
-/* แบ่งตาม “คำ” (ไม่ใช่พยางค์) ถ้าได้คำเดียวคืนค่าว่าง เพื่อไม่ให้คำอ่านซ้ำกับคำศัพท์ */
-function thSyl(t){try{const p=[...new Intl.Segmenter('th',{granularity:'word'}).segment(t)].map(x=>x.segment).filter(x=>x.trim());return p.length>1?p.join('-'):''}catch{return ''}}
+function visionPrompt(lang){
+ const base=`You are reading a photo of a children's vocabulary worksheet (often handwritten, a table with many rows; columns such as No., Word / คำศัพท์, Meaning / คำแปล, check marks). Ignore row numbers, table lines, headers, check marks and scribbles. Return ONLY JSON: {"items":[{"lang":"en|th","word":"","meaning":"","reading":""}]} in reading order, one item per table row.`;
+ const en=`English mode: "word" = the English word from the Word column; "meaning" = the Thai meaning written beside it (read the handwriting; if missing or unreadable translate the word into Thai); "reading" = correct Thai pronunciation written in Thai script with hyphens between syllables (e.g. แอ็ป-เปิ้ล, บุ๊ค). lang="en".`;
+ const th=`Thai mode: read ONLY the column titled "คำศัพท์". "word" = the handwritten Thai word spelled correctly, without row numbers, ticks or table lines. "reading" = how to read it, split into syllables with hyphens (e.g. โรง-เรียน, กะ-ทิ). "meaning" = short English or simple Thai meaning (optional). lang="th".`;
+ return base+' '+(lang==='en'?en:lang==='th'?th:en+' '+th+' Detect the language of each row.')}
+async function visionRead(img,lang){
+ const r=await llm(visionPrompt(lang),img);const arr=Array.isArray(r)?r:(r.items||r.words||[]);
+ const out=arr.map(x=>({lang:lang==='auto'?(x.lang==='th'||/[\u0E00-\u0E7F]/.test(x.word||'')&&!/[A-Za-z]/.test(x.word||'')?'th':'en'):lang,text:String(x.word||x.text||'').trim(),meaning:String(x.meaning||'').trim(),reading:String(x.reading||'').trim()})).filter(x=>x.text);
+ if(!out.length)throw new Error('Vision ไม่พบคำในภาพ');return out}
+async function ocrRead(img,lang,onMsg){
+ await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
+ const r=await Tesseract.recognize(img,lang==='en'?'eng':lang==='th'?'tha':'eng+tha',{logger:m=>{if(m.status)onMsg&&onMsg(`OCR: ${m.status} ${Math.round((m.progress||0)*100)}%`)}});
+ return parseOCR(r.data.text,lang)}
+function parseOCR(text,lang){
+ const out=[],HEAD=/^(no|word|words|meaning|date|name|คำศัพท์|คำแปล|ข้อ|ชื่อ|วันที่)$/i;
+ text.split(/\r?\n/).forEach(raw=>{
+  const l=raw.replace(/[|_=~\[\]{}<>\\\/✓✔✅☑√×✗]/g,' ').replace(/^\s*[\d๐-๙]{1,3}\s*[\.\)\-:]?\s*/,'').replace(/\s+/g,' ').trim();if(!l)return;
+  const hasTh=/[\u0E00-\u0E7F]/.test(l),hasEn=/[A-Za-z]/.test(l);
+  if(lang==='th'||(lang==='auto'&&hasTh&&!hasEn)){
+   if(!hasTh)return;let th=l.replace(/[^\u0E00-\u0E7F\s]/g,' ').trim().replace(/([\u0E00-\u0E7F])\s+(?=[\u0E00-\u0E7F])/g,'$1').trim();
+   if(!th||HEAD.test(th))return;out.push({lang:'th',text:th,meaning:'',reading:''});
+  }else{
+   if(!hasEn)return;const m=l.match(/[A-Za-z][A-Za-z'’\-]*(?: [A-Za-z][A-Za-z'’\-]*)*/);if(!m||m[0].length<2||HEAD.test(m[0]))return;
+   const meaning=hasTh?l.replace(/[^\u0E00-\u0E7F\s]/g,' ').replace(/([\u0E00-\u0E7F])\s+(?=[\u0E00-\u0E7F])/g,'$1').replace(/\s+/g,' ').trim():'';
+   out.push({lang:'en',text:m[0].trim(),meaning,reading:''});}});
+ return out}
+function thSyl(t){try{return [...new Intl.Segmenter('th',{granularity:'word'}).segment(t)].map(s=>s.segment).filter(s=>s.trim()).join('-')}catch{return t}}
 async function mmTranslate(w){try{const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(w)+'&langpair=en|th'),j=await r.json(),t=j.responseData?.translatedText||'';return /MYMEMORY|QUERY LENGTH|INVALID/i.test(t)?'':t}catch{return''}}
 async function llmEnrich(items){
  const p=`For each entry fill Thai fields. Input: ${JSON.stringify(items.map((i,n)=>({n,lang:i.lang,word:i.text})))}. For lang "en": meaning = short Thai translation, reading = correct Thai pronunciation in Thai script with hyphens between syllables (e.g. แอ็ป-เปิ้ล). For lang "th": reading = correct reading split into syllables with hyphens (e.g. โรง-เรียน), meaning = short English or simple Thai meaning. Return ONLY JSON {"items":[{"n":0,"meaning":"","reading":""}]}`;
@@ -951,9 +936,68 @@ async function fillMissing(items){
  if(SHOW_API_UI&&S.cfg.key){try{await llmEnrich(need);return}catch(e){console.warn(e)}}
  let k=0;await Promise.all([0,1,2].map(async()=>{while(k<need.length){const it=need[k++];if(it.lang==='en'&&!it.meaning)it.meaning=await mmTranslate(it.text);if(it.lang==='th'&&!it.reading)it.reading=thSyl(it.text)}}))}
 
+/* ====== Import from image ====== */
+let imp=null;
+function impHTML(){
+ const n=imp.items.filter(i=>i.on&&i.text.trim()).length;
+ return `<div class="dh"><h3>📷 เพิ่มคำศัพท์จากรูป</h3><button class="x" data-act="close">✖</button></div>
+ <div class="grid2"><label class="f">นักเรียน<select class="inp" data-impf="sid">${S.students.map(s=>`<option value="${s.id}" ${s.id===imp.sid?'selected':''}>${esc(s.name)}</option>`).join('')}</select></label>
+ <label class="f">บันทึกเข้าวันที่<input class="inp" type="date" value="${imp.date}" data-impf="date"></label>
+ <label class="f">ภาษาในรูป<select class="inp" data-impf="lang"><option value="auto" ${imp.lang==='auto'?'selected':''}>อัตโนมัติ</option><option value="en" ${imp.lang==='en'?'selected':''}>อังกฤษ (Word + คำแปล)</option><option value="th" ${imp.lang==='th'?'selected':''}>ไทยลายมือ (คอลัมน์ คำศัพท์)</option></select></label></div>
+ <div class="row"><label class="btn orange">📷 ถ่ายภาพ<input type="file" accept="image/*" capture="environment" hidden data-change="imp-file"></label><label class="btn sky">🖼️ เลือกภาพ<input type="file" accept="image/*" hidden data-change="imp-file"></label>
+ ${imp.img&&!imp.busy?`<button class="btn small" data-act="imp-redo" data-ocr="0">🔁 อ่านใหม่ (Vision)</button><button class="btn small" data-act="imp-redo" data-ocr="1">🔁 อ่านใหม่ (OCR สำรอง)</button>`:''}</div>
+ ${S.cfg.key?'':'<div class="note">ยังไม่ได้ใส่ API key ของ Vision ในตั้งค่า ระบบจะใช้ OCR สำรองฟรี (ความแม่นยำลายมือจะน้อยกว่า) — หากต้องการอ่านลายมือแบบฟรี ให้ใช้ปุ่ม “ตั้งค่า Gemini ฟรี” ในเมนูตั้งค่า</div>'}
+ ${imp.img?`<img class="prev" src="${imp.img.data}" alt="ภาพต้นทาง">`:''}
+ ${imp.busy?`<p><span class="spin"></span> <span id="impMsg">${esc(imp.msg)}</span></p>`:''}
+ ${imp.engine?`<p>อ่านด้วย <span class="badge ${imp.engine==='OCR'?'ocr':''}">${imp.engine==='OCR'?'OCR สำรอง':'Vision'}</span> พบ ${imp.items.length} แถว • ตรวจแก้ได้ก่อนบันทึก</p>`:''}
+ ${imp.items.map((it,i)=>`<div class="irow ${it.dup?'dup':''}" data-i="${i}"><input type="checkbox" data-imp="on:${i}" ${it.on?'checked':''} aria-label="เลือก">
+  <select class="inp" data-imp="lang:${i}"><option value="en" ${it.lang==='en'?'selected':''}>EN</option><option value="th" ${it.lang==='th'?'selected':''}>ไทย</option></select>
+  <input class="inp" data-imp="text:${i}" value="${esc(it.text)}" placeholder="คำศัพท์"><input class="inp" data-imp="meaning:${i}" value="${esc(it.meaning)}" placeholder="คำแปล"><input class="inp" data-imp="reading:${i}" value="${esc(it.reading)}" placeholder="คำอ่าน/พยางค์">
+  <button class="ib" data-act="imp-rm" data-i="${i}" title="เอาแถวนี้ออกจากรายการ">✖</button></div>`).join('')}
+ ${imp.img||imp.items.length?`<div class="row"><button class="btn small" data-act="imp-addrow">＋ เพิ่มแถว</button></div>`:''}
+ <div class="row end" style="margin-top:10px"><button class="btn" data-act="close">ยกเลิก</button><button class="btn orange" data-act="imp-save" ${n&&!imp.busy?'':'disabled'}>✅ เพิ่มคำศัพท์ทั้งหมด (${n})</button></div>`}
+function renderImp(){if(imp&&M.includes(imp.m))imp.m.dlg.innerHTML=impHTML()}
+function impSet(t){const[f,i]=t.dataset.imp.split(':'),it=imp?.items[+i];if(!it)return;it[f]=t.type==='checkbox'?t.checked:t.value;if(f==='on'||f==='lang')renderImp()}
+A.import=el=>openSheetImport(el); // ชื่อ action เดิม: เปลี่ยนทางไปตัวนำเข้า Sheets (v3.2 ไม่เปิดตัวสแกนรูปแล้ว)
+C['imp-file']=async el=>{const f=el.files[0];if(!f)return;imp.busy=true;imp.msg='กำลังเตรียมรูป…';imp.items=[];imp.engine='';renderImp();
+ try{const im=await loadImage(f);imp.img={data:scale(im,1280,.7),thumb:scale(im,220,.7)}}catch(e){imp.busy=false;renderImp();return toast(e.message)}
+ await impProcess(false)};
+A['imp-redo']=el=>impProcess(el.dataset.ocr==='1');
+async function impProcess(forceOCR){
+ if(!imp.img)return;imp.busy=true;imp.msg=forceOCR||!S.cfg.key?'กำลังอ่านด้วย OCR สำรอง…':'กำลังอ่านด้วย Vision…';imp.items=[];imp.engine='';renderImp();
+ const m=imp.m;let items=null;
+ try{
+  if(!forceOCR&&S.cfg.key){try{items=await visionRead(imp.img.data,imp.lang);imp.engine='Vision';
+    imp.msg='กำลังเติมคำแปล/คำอ่านที่ยังขาด…';renderImp();await fillMissing(items)}catch(e){console.warn(e);items=null;toast('Vision ใช้ไม่ได้ ('+e.message+') → ใช้ OCR สำรอง')}}
+  if(!items){imp.msg='กำลังอ่านด้วย OCR สำรอง…';renderImp();items=await ocrRead(imp.img.data,imp.lang,t=>{imp.msg=t;const e=$('#impMsg',m.dlg);if(e)e.textContent=t});imp.engine='OCR';imp.msg='กำลังแปลคำ…';renderImp();await fillMissing(items)}
+  imp.items=items.map(x=>({on:true,dup:false,...x}));if(!items.length)toast('ไม่พบคำในภาพ ลองเพิ่มแถวเองหรือถ่ายใหม่');
+ }catch(e){console.error(e);toast('อ่านรูปไม่สำเร็จ: '+e.message);imp.items=[]}
+ imp.busy=false;markDups();renderImp()}
+function markDups(){const seen=new Set();imp.items.forEach(it=>{const k=norm(it.text);it.dup=false;if(!it.on||!k)return;
+ if(seen.has(k)||findDup(imp.sid,it.text,imp.date))it.dup=true;seen.add(k)})}
+A['imp-rm']=el=>{imp.items.splice(+el.dataset.i,1);renderImp()};
+A['imp-addrow']=()=>{imp.items.push({on:true,dup:false,lang:imp.lang==='th'?'th':'en',text:'',meaning:'',reading:''});renderImp()};
+A['imp-save']=async()=>{
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(imp.date))return toast('กรุณาเลือกวันที่');
+ markDups();const sel=imp.items.filter(i=>i.on&&i.text.trim()),ok=sel.filter(i=>!i.dup),dups=sel.filter(i=>i.dup);
+ if(dups.length){renderImp();shakeEls($$('.irow.dup',imp.m.dlg));toast(`⚠️ ข้าม ${dups.length} คำที่ซ้ำ (แก้หรือเอาออกได้)`)}
+ if(!ok.length)return;
+ let imageId='';
+ if(imp.img){imageId=uid();await DB.put('images',{id:imageId,thumb:imp.img.thumb});await DB.put('full',{id:imageId,data:imp.img.data});S.thumbs[imageId]=imp.img.thumb}
+ const t=Date.now(),sid=imp.sid,date=imp.date;
+ const add=ok.map((it,i)=>({id:uid(),sid,date,lang:it.lang,text:it.text.trim(),meaning:(it.meaning||'').trim(),reading:(it.reading||'').trim(),hard:false,source:'image',imageId,createdAt:t+i}));
+ const hadByLang={th:S.words.filter(w=>w.sid===sid&&w.date===date&&w.lang==='th').length,en:S.words.filter(w=>w.sid===sid&&w.date===date&&w.lang==='en').length};
+ S.words.push(...add);await DB.putMany('words',add);
+ imp.items=imp.items.filter(i=>!ok.includes(i));
+ ui.sid=sid;if(ui.tab==='week'){ui.ws=weekStart(date);ui.day=date}
+ render();toast(`✅ เพิ่ม ${add.length} คำให้ ${stu(sid).name} วันที่ ${fdate(date)}`);
+ const overLangs=['th','en'].filter(lang=>hadByLang[lang]+add.filter(w=>w.lang===lang).length>DAY_TARGETS[lang]);
+ if(overLangs.length){shakeEls($$(`[data-day="${date}"]`));toast(`⚠️ วันที่ ${fdate(date)} เกินเป้าหมาย ${overLangs.map(lang=>LANG_LABEL[lang]+' '+DAY_TARGETS[lang]).join(', ')} คำ`)}
+ if(!imp.items.length)closeModal(imp.m);else renderImp()};
+
 /* ====== Import from Gemini App / Google Sheets (v3.2, no Vision API quota) ====== */
 let simp=null;
-const sheetClean=v=>String(v??'').replace(/[\u00A0\u2007\u202F]/g,' ').trim();
+const sheetClean=v=>String(v??'').replace(/ /g,' ').trim();
 const sheetHeadKey=v=>sheetClean(v).toLowerCase().replace(/[\s_\-]/g,'');
 const SHEET_HEADS={
  date:['วันที่','date','day'],student:['นักเรียน','ชื่อนักเรียน','student','studentname','name'],
@@ -1041,7 +1085,7 @@ function sheetRowsToItems(rows){
   else if(cells.length===2){[raw.text,raw.meaning]=cells}
   else{raw.text=cells[0]||''}
   const stuInfo=sheetStudentInfo(raw.student,simp.sid);
-  const dateFromDefault=!sheetClean(raw.date),parsedDate=dateFromDefault?simp.date:sheetDate(raw.date,'');
+  const dateFromDefault=true,parsedDate=simp.date;
   const text=sheetClean(raw.text),conf=sheetConfidence(raw.confidence);
   if(!text&&!sheetClean(raw.meaning)&&!sheetClean(raw.reading)&&!sheetClean(raw.student)&&!sheetClean(raw.date))continue;
   const it={on:true,rowNo:r+1,sid:stuInfo.sid,studentName:stuInfo.studentName,sidFromDefault:stuInfo.fromDefault,
@@ -1058,7 +1102,7 @@ function validateSheetItems(){
   it.text=sheetClean(it.text);it.meaning=sheetClean(it.meaning);it.reading=sheetClean(it.reading);
   it.errors=[];it.warnings=[];it.dup=false;it.ready=false;
   if(!stu(it.sid))it.errors.push(it.studentName?`ไม่พบนักเรียน “${it.studentName}” ในระบบ เลือกนักเรียนให้แถวนี้ก่อน`:'ยังไม่เลือกนักเรียน');
-  if(!it.date||sheetDate(it.date,'')!==it.date)it.errors.push(it.dateRaw?`วันที่ “${it.dateRaw}” อ่านไม่ได้ เลือกวันที่ใหม่`:'ยังไม่มีวันที่');
+  if(!it.date||sheetDate(it.date,'')!==it.date)it.errors.push('กรุณาเลือกวันที่นำเข้าด้านบนก่อนบันทึก');
   if(!it.text)it.errors.push('ไม่มีคำศัพท์');
   if(/อ่านไม่ชัด/.test(it.text))it.errors.push('แถวนี้ยังเป็น [อ่านไม่ชัด] ต้องแก้เป็นคำที่ถูกต้องหรือเอาออก');
   if(it.lang!=='en'&&it.lang!=='th'){it.lang=sheetLang('',it.text);it.warnings.push('ระบบเดาภาษาให้จากตัวอักษร')}
@@ -1127,7 +1171,7 @@ function sheetRowHTML(it,i){
  return `<div class="srow ${it.errors.length?'bad':it.warnings.length?'warnrow':''}" data-i="${i}">
  <div class="srow-top"><label class="sheet-check"><input type="checkbox" data-simp="on:${i}" ${it.on?'checked':''}><b>แถว ${esc(it.rowNo||i+1)}</b></label>${conf}${it.source?`<span class="badge gray">${esc(it.source)}</span>`:''}${it.dup?'<span class="badge bad">คำซ้ำ</span>':''}<span class="sp"></span><label class="sheet-check"><input type="checkbox" data-simp="hard:${i}" ${it.hard?'checked':''}>⭐ ยาก</label><button class="ib del" data-act="sheet-rm" data-i="${i}" title="เอาแถวนี้ออกจากรายการ">✖</button></div>
  <div class="srow-grid">
- <label>วันที่<input class="inp" type="date" data-simp="date:${i}" value="${esc(it.date)}"></label>
+ <label>วันที่นำเข้า<input class="inp" type="date" value="${esc(it.date)}" readonly aria-label="วันที่นำเข้า กำหนดจากวันที่ด้านบน"></label>
  <label>นักเรียน<select class="inp" data-simp="sid:${i}">${stu(it.sid)?'':`<option value="" selected>⚠️ ${esc(it.studentName||'เลือกนักเรียน')}</option>`}${S.students.map(s=>`<option value="${s.id}" ${s.id===it.sid?'selected':''}>${esc(s.name)}</option>`).join('')}</select></label>
  <label>ภาษา<select class="inp" data-simp="lang:${i}"><option value="en" ${it.lang==='en'?'selected':''}>EN</option><option value="th" ${it.lang==='th'?'selected':''}>ไทย</option></select></label>
  <label>คำศัพท์<input class="inp" data-simp="text:${i}" value="${esc(it.text)}" maxlength="120" placeholder="คำศัพท์"></label>
@@ -1140,14 +1184,14 @@ function sheetRowHTML(it,i){
  </div>`}
 function sheetImpHTML(){
  const st=sheetStats();
- return `<div class="dh"><h3>📋 นำเข้าคำศัพท์จาก Google Sheets</h3><button class="x" data-act="close" aria-label="ปิด">✖</button></div>
- <div class="note"><b>ไม่ใช้ Vision API และไม่ตัดโควตา API ใน Word Studio:</b> ใช้ Gemini App อ่านรูป → ตรวจใน Google Sheets → คัดลอกแถวจาก Sheets มาวางที่นี่ หรือดาวน์โหลดไฟล์ CSV จาก Sheets แล้วเลือกไฟล์ ระบบรองรับหัวตารางภาษาไทย 10 คอลัมน์, TSV จาก Sheets, CSV และตาราง Markdown • เป้าหมายต่อวัน: ไทย 10 + EN 7 คำ</div>
+ return `<div class="dh"><h3>📋 นำเข้าคำศัพท์จาก Google Sheets</h3><button class="x" data-act="close">✖</button></div>
+ <div class="note"><b>ไม่ใช้ Vision API และไม่ตัดโควตา API ใน Word Studio:</b> ใช้ Gemini App อ่านรูป → ตรวจใน Google Sheets → คัดลอกแถวจาก Sheets มาวางที่นี่ หรือดาวน์โหลดไฟล์ CSV จาก Sheets แล้วเลือกไฟล์ ระบบรองรับหัวตารางภาษาไทย 10 คอลัมน์, TSV จาก Sheets, CSV และตาราง Markdown • เป้าหมายต่อวัน: ไทย 10 + EN 7 คำ<br><b>วันที่นำเข้าด้านล่างมีลำดับสำคัญสูงสุด:</b> ทุกแถวจะใช้วันที่นี้ โดยไม่ใช้วันที่จาก Sheets / Gemini / CSV หากต้องการหลายวันให้นำเข้าแยกครั้ง</div>
  <details class="sheet-help"><summary>🤖 คำสั่งสำเร็จรูปสำหรับ Gemini App (แตะเพื่อเปิด/คัดลอก)</summary>
  <p>ชื่อและวันที่ด้านล่างมาจากช่อง “ค่าเริ่มต้น” ของหน้าต่างนี้ แก้โหมดและจำนวนคำก่อนส่งรูปใน Gemini</p>
  <textarea id="sheetPrompt" class="inp sheet-ta" readonly>${esc(sheetPromptText())}</textarea>
  <div class="row" style="margin-top:7px"><button class="btn small orange" data-act="sheet-copy-prompt">📋 คัดลอกคำสั่ง Gemini</button><a class="btn small sky" href="https://gemini.google.com/" target="_blank" rel="noopener">เปิด Gemini</a><a class="btn small mint" href="https://docs.google.com/spreadsheets/" target="_blank" rel="noopener">เปิด Google Sheets</a></div></details>
  <div class="grid2"><label class="f">นักเรียนค่าเริ่มต้น <small>(ใช้เมื่อแถวไม่มีชื่อนักเรียน)</small><select class="inp" data-change="sheet-default" data-f="sid">${S.students.map(s=>`<option value="${s.id}" ${s.id===simp.sid?'selected':''}>${esc(s.name)}</option>`).join('')}</select></label>
- <label class="f">วันที่ค่าเริ่มต้น <small>(ใช้เมื่อแถวไม่มีวันที่)</small><input class="inp" type="date" value="${simp.date}" data-change="sheet-default" data-f="date"></label></div>
+ <label class="f">วันที่นำเข้า <small>(ใช้กับทุกแถว แม้ข้อมูลต้นทางมีวันที่)</small><input class="inp" type="date" value="${simp.date}" data-change="sheet-default" data-f="date"></label></div>
  <label class="f">วางข้อมูลจาก Google Sheets / Gemini / CSV<textarea class="inp sheet-ta" data-input="sheet-raw" placeholder="วันที่&#9;นักเรียน&#9;คำศัพท์&#9;ภาษา&#9;คำแปล&#9;คำอ่าน&#9;คำยาก&#9;ที่มา&#9;ความมั่นใจ&#9;หมายเหตุตรวจ">${esc(simp.raw)}</textarea></label>
  <div class="row"><button class="btn orange" data-act="sheet-parse">🔍 ตรวจตาราง</button><label class="btn sky">📄 เลือกไฟล์ CSV/TSV<input type="file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values" hidden data-change="sheet-file"></label><button class="btn small" data-act="sheet-sample">ลองข้อมูลตัวอย่าง</button><button class="btn small" data-act="sheet-clear">ล้างข้อมูลนำเข้า</button>${simp.fileName?`<span class="badge gray">ไฟล์: ${esc(simp.fileName)}</span>`:''}</div>
  ${simp.msg?`<div class="note">${esc(simp.msg)}</div>`:''}
@@ -1167,7 +1211,7 @@ function sheetImpSet(t,recalc=true){
 }
 C['sheet-default']=el=>{
  if(!simp)return;const f=el.dataset.f;simp[f]=el.value;
- simp.items.forEach(it=>{if(f==='sid'&&it.sidFromDefault){it.sid=el.value;it.studentName=(stu(el.value)||{}).name||''}if(f==='date'&&it.dateFromDefault)it.date=el.value});
+ simp.items.forEach(it=>{if(f==='sid'&&it.sidFromDefault){it.sid=el.value;it.studentName=(stu(el.value)||{}).name||''}if(f==='date')it.date=el.value});
  validateSheetItems();renderSheetImp();
 };
 I['sheet-raw']=el=>{if(simp)simp.raw=el.value};
@@ -1236,7 +1280,7 @@ A['sheet-save']=async()=>{
 /* ====== Cloud sync (Firebase Firestore) ====== */
 /* ใส่ค่าจาก Firebase Console → Project settings → Your apps → Config (ปล่อยว่าง = ใช้แบบเครื่องเดียว) */
 /* Your web app's Firebase configuration */
-const FIREBASE_CONFIG = {
+const firebaseConfig = {
   apiKey: "AIzaSyCDwP5pdMnmC7ySIevlHbK9N461-DSDUhI",
   authDomain: "word-studio-9e21e.firebaseapp.com",
   projectId: "word-studio-9e21e",
@@ -1244,14 +1288,13 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "488700056208",
   appId: "1:488700056208:web:a84f8c3b399fb8936a3e15"
 };
-/* ปิดการสมัครบัญชีใหม่ในหน้าเว็บ — ตั้งเป็น true ชั่วคราวเฉพาะตอนสร้างบัญชีแรก และควรปิด sign-up ที่ Firebase Console ด้วย */
-const ALLOW_SIGNUP=false;
+const FIREBASE_CONFIG = firebaseConfig; // ชื่อตัวแปรที่ระบบซิงก์ในไฟล์นี้อ้างถึง (ชี้ชุดค่าเดียวกัน)
 let _rt=0;
 function uiRefresh(){clearTimeout(_rt);_rt=setTimeout(()=>{const a=document.activeElement;
  if(a&&a.closest&&a.closest('#view')&&/^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName)){$('#hdr').innerHTML=headerHTML();return}render()},250)}
 async function reloadState(){
  const [st,wd,dr,im]=await Promise.all(['students','words','drills','images'].map(s=>DB.all(s)));
- S.students=cleanList(st,cleanStudent).sort((a,b)=>a.createdAt-b.createdAt);S.words=cleanList(wd,cleanWord);S.drills=cleanList(dr,cleanDrill);S.thumbs={};im.forEach(i=>{if(SAFE_ID.test(String(i.id)))S.thumbs[i.id]=safeImg(i.thumb)});
+ S.students=st.sort((a,b)=>a.createdAt-b.createdAt);S.words=wd;S.drills=dr;S.thumbs={};im.forEach(i=>S.thumbs[i.id]=i.thumb);
  if(!S.students.length){const s=newStudent('น้องกวาง','ป.2 • 8 ปี',COLORS[0],'🦌');s.isDefault=true;S.students.push(s);await DB.put('students',s)}
  if(!stu(ui.sid))ui.sid=S.students[0].id}
 
@@ -1356,38 +1399,25 @@ function syncHTML(){
  if(!Sync.user)return head+`<p>ล็อกอินบัญชีเดียวกันทุกเครื่อง ข้อมูลจะตรงกัน</p>
   <label class="f">อีเมล<input class="inp" id="sy-email" type="email" autocomplete="username"></label>
   <label class="f">รหัสผ่าน (อย่างน้อย 6 ตัว)<input class="inp" id="sy-pw" type="password" autocomplete="current-password"></label>
-  <div class="row"><button class="btn orange" data-act="sync-in">เข้าสู่ระบบ</button>${ALLOW_SIGNUP?'<button class="btn mint" data-act="sync-up">สร้างบัญชีใหม่ (ครั้งแรก)</button>':''}<button class="btn small" data-act="sync-reset">ลืมรหัสผ่าน</button></div></div></section>`;
+  <div class="row"><button class="btn orange" data-act="sync-in">เข้าสู่ระบบ</button><button class="btn mint" data-act="sync-up">สร้างบัญชีใหม่ (ครั้งแรก)</button><button class="btn small" data-act="sync-reset">ลืมรหัสผ่าน</button></div></div></section>`;
  const lab={ok:'✅ ซิงก์แล้ว',syncing:'⏳ กำลังซิงก์…',error:'⚠️ มีปัญหา'}[Sync.status]||'';
  return head+`<p>บัญชี: <b>${esc(Sync.user.email)}</b></p><p>${lab} ${esc(Sync.msg)}</p>
   <div class="row"><button class="btn sky" data-act="sync-now">🔄 ซิงก์ใหม่</button><button class="btn" data-act="sync-out">ออกจากระบบ</button></div></div></section>`}
-function authMsg(e){const m={'auth/invalid-credential':'อีเมลหรือรหัสผ่านไม่ถูกต้อง','auth/wrong-password':'รหัสผ่านไม่ถูกต้อง','auth/user-not-found':'ไม่พบบัญชีนี้'+(ALLOW_SIGNUP?' (กด “สร้างบัญชีใหม่” ถ้าเป็นครั้งแรก)':''),'auth/email-already-in-use':'อีเมลนี้มีบัญชีแล้ว ให้กด “เข้าสู่ระบบ”','auth/weak-password':'รหัสผ่านสั้นเกินไป','auth/invalid-email':'รูปแบบอีเมลไม่ถูกต้อง','auth/operation-not-allowed':'ยังไม่ได้เปิด Email/Password ใน Firebase','auth/network-request-failed':'ไม่มีอินเทอร์เน็ต','auth/unauthorized-domain':'โดเมนนี้ยังไม่ได้เพิ่มใน Authorized domains'};return m[e.code]||e.message}
+function authMsg(e){const m={'auth/invalid-credential':'อีเมลหรือรหัสผ่านไม่ถูกต้อง','auth/wrong-password':'รหัสผ่านไม่ถูกต้อง','auth/user-not-found':'ไม่พบบัญชีนี้ (กด “สร้างบัญชีใหม่” ถ้าเป็นครั้งแรก)','auth/email-already-in-use':'อีเมลนี้มีบัญชีแล้ว ให้กด “เข้าสู่ระบบ”','auth/weak-password':'รหัสผ่านสั้นเกินไป','auth/invalid-email':'รูปแบบอีเมลไม่ถูกต้อง','auth/operation-not-allowed':'ยังไม่ได้เปิด Email/Password ใน Firebase','auth/network-request-failed':'ไม่มีอินเทอร์เน็ต','auth/unauthorized-domain':'โดเมนนี้ยังไม่ได้เพิ่มใน Authorized domains'};return m[e.code]||e.message}
 async function syncAuth(el,fn){const box=el.closest('.rcard'),e=$('#sy-email',box).value.trim(),p=$('#sy-pw',box).value;
  if(!e||p.length<6)return toast('กรอกอีเมลและรหัสผ่าน (อย่างน้อย 6 ตัว)');
  try{await Sync[fn](e,p);toast('☁️ เข้าสู่ระบบแล้ว')}catch(err){toast('❌ '+authMsg(err))}}
-A['sync-in']=el=>syncAuth(el,'signIn');A['sync-up']=el=>ALLOW_SIGNUP?syncAuth(el,'signUp'):toast('ปิดการสมัครบัญชีใหม่ไว้แล้ว');
+A['sync-in']=el=>syncAuth(el,'signIn');A['sync-up']=el=>syncAuth(el,'signUp');
 A['sync-reset']=async el=>{const e=$('#sy-email',el.closest('.rcard')).value.trim();if(!e)return toast('กรอกอีเมลก่อน แล้วกด “ลืมรหัสผ่าน”');
  try{await Sync.auth.sendPasswordResetEmail(e);toast('ส่งอีเมลรีเซ็ตรหัสผ่านแล้ว (เช็กกล่องสแปมด้วย)')}catch(err){toast('❌ '+authMsg(err))}};
 A['sync-now']=()=>{Sync.stop();Sync.start()};
 A['sync-out']=async()=>{if(!await ask('ออกจากระบบซิงก์?','ข้อมูลในเครื่องนี้ยังอยู่ แต่จะไม่ซิงก์จนกว่าจะเข้าสู่ระบบใหม่','ออกจากระบบ'))return;await Sync.signOut()};
 
-/* ====== Accessibility helpers (v3.7) ====== */
-document.addEventListener('keydown',e=>{
- const t=e.target;
- if((e.key==='Enter'||e.key===' ')&&t.matches&&t.matches('[role="button"][data-act]')){e.preventDefault();t.click();return}
- if(e.key==='Tab'&&M.length){ /* ล็อกโฟกัสไว้ในหน้าต่างที่เปิดอยู่ */
-  const d=M[M.length-1].dlg,f=$$('a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])',d).filter(x=>x.offsetParent!==null);
-  if(!f.length){e.preventDefault();d.focus();return}
-  const a=f[0],z=f[f.length-1],cur=document.activeElement;
-  if(e.shiftKey&&(cur===a||cur===d)){e.preventDefault();z.focus()}
-  else if(!e.shiftKey&&cur===z){e.preventDefault();a.focus()}}});
-const _lab=()=>$$('button[title]:not([aria-label]),[role="button"][title]:not([aria-label])').forEach(b=>b.setAttribute('aria-label',b.getAttribute('title')));
-new MutationObserver(()=>{clearTimeout(_lab.t);_lab.t=setTimeout(_lab,50)}).observe(document.body,{childList:true,subtree:true});
-
 /* ====== Init ====== */
 (async function init(){
  await DB.open();await migrateV1();
  const [st,wd,dr,im,cf]=await Promise.all(['students','words','drills','images','settings'].map(s=>DB.all(s)));
- S.students=cleanList(st,cleanStudent).sort((a,b)=>a.createdAt-b.createdAt);S.words=cleanList(wd,cleanWord);S.drills=cleanList(dr,cleanDrill);im.forEach(i=>{if(SAFE_ID.test(String(i.id)))S.thumbs[i.id]=safeImg(i.thumb)});
+ S.students=st.sort((a,b)=>a.createdAt-b.createdAt);S.words=wd;S.drills=dr;im.forEach(i=>S.thumbs[i.id]=i.thumb);
  const c=cf.find(x=>x.id==='cfg');if(c)Object.assign(S.cfg,c);normalizeCfg();DB.put('settings',{id:'cfg',...S.cfg});
  Sync.loadTombs(cf.find(x=>x.id==='tombs'));
  if(!S.students.length){const s=newStudent('น้องกวาง','ป.2 • 8 ปี',COLORS[0],'🦌');s.isDefault=true;S.students.push(s);await DB.put('students',s)}
@@ -1397,5 +1427,5 @@ new MutationObserver(()=>{clearTimeout(_lab.t);_lab.t=setTimeout(_lab,50)}).obse
  try{navigator.storage?.persist?.()}catch{}
 })().catch(e=>{console.error(e);document.body.insertAdjacentHTML('afterbegin','<p style="padding:20px">เริ่มระบบไม่สำเร็จ: '+esc(e.message)+'</p>')});
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a56d63fe9c182721',t:'MTc5NDA2NTU0Ng=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a56d63fe9c182721',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
