@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Little Fawn Word Explorer — เกมทายคำศัพท์ภาษาอังกฤษ ป.1–ป.2 (จันทร์–ศุกร์)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&family=Itim&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#4a3b52;
+  --paper:#fff8e7;
+  --pink:#ffb3c7;
+  --mint:#a8e6cf;
+  --lemon:#fff1a8;
+  --lav:#cdb4ff;
+  --sky:#a8d8ff;
+  --peach:#ffcba4;
+  --orange:#ff9f43;
+  --red:#ff6b81;
+  --sh:4px 4px 0 rgba(74,59,82,.22);
+}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:'Mali','Itim','Noto Sans Thai',system-ui,sans-serif;
+  color:var(--ink);
+  line-height:1.45;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 8% 10%,#ffd6e8 0 90px,transparent 91px),
+    radial-gradient(circle at 92% 18%,#c9f0e0 0 110px,transparent 111px),
+    radial-gradient(circle at 80% 90%,#e3d7ff 0 130px,transparent 131px),
+    radial-gradient(circle at 10% 85%,#fff1a8 0 100px,transparent 101px),
+    var(--paper);
+  background-attachment:fixed;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.28;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45 0 0 0 0 .35 0 0 0 0 .35 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+button,input,select{font:inherit;color:inherit}
+h1,h2,h3,h4{margin:0;font-family:'Itim','Mali',sans-serif}
+
+#app{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:12px 14px 40px}
+
+/* Header */
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:4px 2px 10px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .logo{font-size:2.3rem;animation:float 3s ease-in-out infinite}
+.brand h1{font-size:1.55rem;line-height:1.1}
+.brand p{margin:0;font-size:.85rem;opacity:.82}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* Buttons & Badges */
+.btn{
+  display:inline-flex;align-items:center;gap:7px;justify-content:center;
+  font-weight:700;border:3px solid var(--ink);
+  border-radius:16px 20px 14px 22px/20px 14px 22px 16px;
+  padding:.5em 1.05em;background:#fff;box-shadow:var(--sh);
+  cursor:pointer;transition:transform .14s, background .14s;text-align:center;user-select:none;
+}
+.btn:hover:not(:disabled){transform:translateY(-2px) rotate(-.8deg)}
+.btn:active:not(:disabled){transform:translate(2px,2px);box-shadow:none}
+.btn:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.btn.small{padding:.28em .78em;font-size:.88rem}
+.btn.lg{padding:.72em 1.35em;font-size:1.12rem}
+.btn.xl{padding:.85em 1.55em;font-size:1.22rem}
+.btn.orange{background:var(--orange)}
+.btn.mint{background:var(--mint)}
+.btn.lav{background:var(--lav)}
+.btn.sky{background:var(--sky)}
+.btn.pink{background:var(--pink)}
+.btn.lemon{background:var(--lemon)}
+.btn.danger{background:var(--red);color:#fff}
+
+.badge{
+  display:inline-flex;align-items:center;gap:5px;
+  border:2.5px solid var(--ink);border-radius:999px;
+  padding:2px 12px;font-size:.85rem;font-weight:700;background:var(--lemon);
+}
+.badge.mint{background:var(--mint)}
+.badge.sky{background:var(--sky)}
+.badge.pink{background:var(--pink)}
+.badge.lav{background:var(--lav)}
+
+.crayon{
+  border:3px solid var(--ink);
+  border-radius:24px 30px 22px 28px/28px 22px 30px 24px;
+  box-shadow:var(--sh);
+  background:#fffdf7;
+}
+
+/* Rest screen (Weekend / Sunday) */
+.lock-box{
+  padding:28px 20px;text-align:center;
+  background:linear-gradient(155deg,#fff,#fff5d6 60%,#ffe4ec);
+}
+.lock-icon{font-size:4.2rem;display:inline-block;animation:float 2.8s ease-in-out infinite}
+.lock-title{font-size:1.85rem;margin:8px 0 6px}
+.countdown-pill{
+  display:inline-block;margin:10px 0;padding:10px 22px;
+  background:var(--lemon);border:3px solid var(--ink);border-radius:999px;
+  font-size:1.12rem;font-weight:700;box-shadow:var(--sh);
+}
+
+/* Main Stage - 80% Visual Card */
+.stage-wrap{
+  display:flex;flex-direction:column;gap:12px;
+}
+.stage-top{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+  padding:8px 14px;background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:var(--sh);
+}
+.dots{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.dot{
+  width:28px;height:28px;border-radius:50%;border:2.5px solid var(--ink);
+  display:grid;place-items:center;font-size:.82rem;font-weight:700;
+  background:#fff;cursor:pointer;transition:transform .15s;
+}
+.dot.cur{background:var(--orange);transform:scale(1.14)}
+.dot.known{background:var(--mint)}
+.dot.review{background:var(--pink)}
+
+.hero-card{
+  position:relative;
+  background:linear-gradient(165deg,#ffffff 0%,#fffdf5 65%,#f5fbff 100%);
+  padding:14px 16px 18px;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  min-height:calc(100vh - 235px);
+  min-height:calc(100dvh - 235px);
+  animation:pop .28s both;
+}
+.hero-meta{
+  width:100%;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+}
+
+/* 80% Animated Illustration Stage */
+.anim-stage{
+  width:100%;
+  flex:1 1 auto;
+  min-height:290px;
+  height:56vh;
+  max-height:520px;
+  margin:8px 0;
+  border:3px dashed rgba(74,59,82,.28);
+  border-radius:22px;
+  background:radial-gradient(circle at 50% 45%,#ffffff 0%,#fff9eb 72%,#f0f8ff 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  cursor:pointer;
+}
+.anim-stage svg{
+  width:82%;
+  height:82%;
+  max-width:440px;
+  max-height:440px;
+  overflow:visible;
+}
+.tap-hint{
+  position:absolute;bottom:8px;right:12px;
+  font-size:.78rem;opacity:.68;background:rgba(255,255,255,.85);
+  padding:2px 10px;border-radius:999px;border:1.5px solid rgba(74,59,82,.25);
+}
+
+/* Word + Reading + Meaning block */
+.word-panel{
+  width:100%;text-align:center;
+  background:rgba(255,255,255,.92);
+  border:3px solid var(--ink);
+  border-radius:20px;
+  padding:10px 14px;
+  box-shadow:3px 3px 0 rgba(74,59,82,.16);
+}
+.word-main-row{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;
+}
+.word-text{
+  font-family:'Itim','Mali',sans-serif;
+  font-size:clamp(2.2rem,6.5vw,3.5rem);
+  font-weight:700;
+  line-height:1.12;
+  color:var(--ink);
+}
+.word-reading{
+  font-size:clamp(1.15rem,3vw,1.45rem);
+  font-weight:700;
+  color:#7a5c8a;
+  margin-top:2px;
+}
+.word-meaning{
+  font-size:clamp(1.05rem,2.6vw,1.3rem);
+  color:#2f6f56;
+  font-weight:600;
+  margin-top:2px;
+}
+
+/* Bottom Controls */
+.ctrl-bar{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:4px;
+}
+.ctrl-nav{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+}
+.ctrl-judge{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end;
+}
+
+/* Summary Screen */
+.sum-card{
+  padding:24px 18px;text-align:center;
+  background:linear-gradient(155deg,#fff,#e8fbf2 55%,#fff5cc);
+}
+.sum-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:10px;margin:16px 0;text-align:left;
+}
+.mini-card{
+  border:2.5px solid var(--ink);border-radius:16px;padding:10px 12px;
+  background:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.mini-card.known{background:#e7fbf0}
+.mini-card.review{background:#ffe8ef}
+
+/* 26-Week Mon-Fri Schedule Grid */
+.week-list{
+  display:flex;flex-direction:column;gap:12px;margin-top:14px;
+}
+.wk-row{
+  border:2.5px solid var(--ink);border-radius:18px;padding:10px 12px;
+  background:#fff;
+}
+.wk-row-head{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+  margin-bottom:8px;
+}
+.wk-days{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;
+}
+.day-pill{
+  border:2px solid var(--ink);border-radius:14px;padding:8px 10px;
+  background:#fffdf7;display:flex;flex-direction:column;gap:3px;
+  transition:transform .14s;
+}
+.day-pill.done{background:var(--mint)}
+.day-pill.today{background:var(--lemon);outline:3px dashed var(--orange);outline-offset:1px}
+.day-pill.locked{opacity:.65;background:#f5f1e8}
+.day-pill.clickable{cursor:pointer}
+.day-pill.clickable:hover{transform:translateY(-2px)}
+
+/* Animations */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px) rotate(3deg)}}
+@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+@keyframes wobble{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-7deg)}75%{transform:rotate(7deg)}}
+@keyframes bounceSoft{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-14px) scale(1.04)}}
+@keyframes pulseSoft{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+@keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes flyAcross{0%,100%{transform:translate(0,0) rotate(-3deg)}50%{transform:translate(16px,-14px) rotate(4deg)}}
+@keyframes swimWave{0%,100%{transform:translateX(-12px) rotate(-2deg)}50%{transform:translateX(12px) rotate(2deg)}}
+@keyframes flapLeft{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.35)}}
+@keyframes flapRight{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.35)}}
+@keyframes rainDrop{0%{transform:translateY(-10px);opacity:0}40%{opacity:1}100%{transform:translateY(28px);opacity:0}}
+@keyframes twinkle{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
+@keyframes driveMove{0%,100%{transform:translateX(-14px)}50%{transform:translateX(14px)}}
+
+.anim-float{animation:float 2.6s ease-in-out infinite;transform-origin:center}
+.anim-wobble{animation:wobble 2.2s ease-in-out infinite;transform-origin:center}
+.anim-bounce{animation:bounceSoft 1.8s ease-in-out infinite;transform-origin:center}
+.anim-pulse{animation:pulseSoft 1.9s ease-in-out infinite;transform-origin:center}
+.anim-spin{animation:spinSlow 9s linear infinite;transform-origin:center}
+.anim-fly{animation:flyAcross 2.5s ease-in-out infinite;transform-origin:center}
+.anim-swim{animation:swimWave 2.6s ease-in-out infinite;transform-origin:center}
+.anim-drive{animation:driveMove 2.4s ease-in-out infinite;transform-origin:center}
+.anim-twinkle{animation:twinkle 1.6s ease-in-out infinite;transform-origin:center}
+.anim-rain1{animation:rainDrop 1.3s linear infinite}
+.anim-rain2{animation:rainDrop 1.3s linear .45s infinite}
+.anim-rain3{animation:rainDrop 1.3s linear .9s infinite}
+.wing-l{animation:flapLeft .55s ease-in-out infinite;transform-origin:100px 100px}
+.wing-r{animation:flapRight .55s ease-in-out infinite;transform-origin:100px 100px}
+
+#toasts{position:fixed;left:0;right:0;bottom:16px;z-index:99;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none;padding:0 12px}
+.toast{background:var(--ink);color:#fff;border-radius:16px;padding:8px 18px;font-weight:600;animation:pop .22s both;box-shadow:var(--sh)}
+
+@media (max-width:740px){
+  .hero-card{min-height:auto}
+  .anim-stage{height:44vh;min-height:240px}
+  .ctrl-bar{grid-template-columns:1fr}
+  .ctrl-nav,.ctrl-judge{justify-content:center}
+  .ctrl-nav .btn,.ctrl-judge .btn{flex:1 1 auto}
+  .wk-days{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01s!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="brand">
+      <span class="logo">🦌</span>
+      <div>
+        <h1>Little Fawn Word Explorer</h1>
+        <p>คำศัพท์ภาษาอังกฤษ ป.1–ป.2 • เล่นวันจันทร์–ศุกร์ หยุดเฉพาะวันอาทิตย์ (ชุดละ 8 คำ • 6 เดือน)</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn small sky" id="btnViewCal">📅 ตารางเรียน จันทร์–ศุกร์ (6 เดือน)</button>
+      <button class="btn small lav" id="btnParentMode">🔒 โหมดทดลองเล่น: ปิด</button>
+    </div>
+  </header>
+
+  <main id="main"></main>
+</div>
+<div id="toasts"></div>
+
+<script>
+'use strict';
+
+/* ====== 1. กำหนดการ 6 เดือน: เริ่มจันทร์ที่ 23 พ.ย. 2569 ถึง 23 พ.ค. 2570 (เล่น จันทร์–ศุกร์ 130 วัน) ====== */
+const PLAY_DAYS = ["2026-11-23", "2026-11-24", "2026-11-25", "2026-11-26", "2026-11-27", "2026-11-30", "2026-12-01", "2026-12-02", "2026-12-03", "2026-12-04", "2026-12-07", "2026-12-08", "2026-12-09", "2026-12-10", "2026-12-11", "2026-12-14", "2026-12-15", "2026-12-16", "2026-12-17", "2026-12-18", "2026-12-21", "2026-12-22", "2026-12-23", "2026-12-24", "2026-12-25", "2026-12-28", "2026-12-29", "2026-12-30", "2026-12-31", "2027-01-01", "2027-01-04", "2027-01-05", "2027-01-06", "2027-01-07", "2027-01-08", "2027-01-11", "2027-01-12", "2027-01-13", "2027-01-14", "2027-01-15", "2027-01-18", "2027-01-19", "2027-01-20", "2027-01-21", "2027-01-22", "2027-01-25", "2027-01-26", "2027-01-27", "2027-01-28", "2027-01-29", "2027-02-01", "2027-02-02", "2027-02-03", "2027-02-04", "2027-02-05", "2027-02-08", "2027-02-09", "2027-02-10", "2027-02-11", "2027-02-12", "2027-02-15", "2027-02-16", "2027-02-17", "2027-02-18", "2027-02-19", "2027-02-22", "2027-02-23", "2027-02-24", "2027-02-25", "2027-02-26", "2027-03-01", "2027-03-02", "2027-03-03", "2027-03-04", "2027-03-05", "2027-03-08", "2027-03-09", "2027-03-10", "2027-03-11", "2027-03-12", "2027-03-15", "2027-03-16", "2027-03-17", "2027-03-18", "2027-03-19", "2027-03-22", "2027-03-23", "2027-03-24", "2027-03-25", "2027-03-26", "2027-03-29", "2027-03-30", "2027-03-31", "2027-04-01", "2027-04-02", "2027-04-05", "2027-04-06", "2027-04-07", "2027-04-08", "2027-04-09", "2027-04-12", "2027-04-13", "2027-04-14", "2027-04-15", "2027-04-16", "2027-04-19", "2027-04-20", "2027-04-21", "2027-04-22", "2027-04-23", "2027-04-26", "2027-04-27", "2027-04-28", "2027-04-29", "2027-04-30", "2027-05-03", "2027-05-04", "2027-05-05", "2027-05-06", "2027-05-07", "2027-05-10", "2027-05-11", "2027-05-12", "2027-05-13", "2027-05-14", "2027-05-17", "2027-05-18", "2027-05-19", "2027-05-20", "2027-05-21"];
+const WORDS_DB = [["en", "cat", "แค็ท", "แมว", "สัตว์รอบตัว", "cat", "#ffb3c7", "#4a3b52"], ["en", "dog", "ด็อก", "สุนัข / หมา", "สัตว์รอบตัว", "dog", "#ffcba4", "#4a3b52"], ["en", "rabbit", "แร็บ-บิท", "กระต่าย", "สัตว์รอบตัว", "rabbit", "#ffffff", "#ffb3c7"], ["en", "elephant", "เอ็ล-ละ-เฟินท์", "ช้าง", "สัตว์รอบตัว", "elephant", "#a8d8ff", "#4a3b52"], ["en", "bird", "เบิร์ด", "นก", "สัตว์รอบตัว", "bird", "#fff1a8", "#ff9f43"], ["en", "fish", "ฟิช", "ปลา", "สัตว์รอบตัว", "fish", "#a8e6cf", "#4a3b52"], ["en", "duck", "ดัค", "เป็ด", "สัตว์รอบตัว", "duck", "#fff1a8", "#ff9f43"], ["en", "butterfly", "บัท-เทอร์-ฟลาย", "ผีเสื้อ", "สัตว์รอบตัว", "butterfly", "#cdb4ff", "#ffb3c7"], ["en", "apple", "แอ็พ-เพิล", "แอปเปิล", "ผลไม้", "apple", "#ff6b81", "#a8e6cf"], ["en", "banana", "บะ-นา-นะ", "กล้วย", "ผลไม้", "banana", "#fff1a8", "#ff9f43"], ["en", "orange", "ออ-เรนจ์", "ส้ม", "ผลไม้", "orange", "#ff9f43", "#a8e6cf"], ["en", "watermelon", "วอ-เทอร์-เมล-ลอน", "แตงโม", "ผลไม้", "watermelon", "#ff6b81", "#a8e6cf"], ["en", "grape", "เกรพ", "องุ่น", "ผลไม้", "grape", "#cdb4ff", "#a8e6cf"], ["en", "mango", "แมง-โก", "มะม่วง", "ผลไม้", "mango", "#fff1a8", "#ff9f43"], ["en", "strawberry", "สตรอว์-เบอร์-รี", "สตรอว์เบอร์รี", "ผลไม้", "strawberry", "#ff6b81", "#a8e6cf"], ["en", "pineapple", "ไพน์-แอ็พ-เพิล", "สับปะรด", "ผลไม้", "pineapple", "#fff1a8", "#a8e6cf"], ["en", "eye", "อาย", "ตา", "ร่างกาย", "eye", "#a8d8ff", "#4a3b52"], ["en", "ear", "เอียร์", "หู", "ร่างกาย", "ear", "#ffcba4", "#4a3b52"], ["en", "nose", "โนส", "จมูก", "ร่างกาย", "nose", "#ffb3c7", "#4a3b52"], ["en", "mouth", "เมาธ์", "ปาก", "ร่างกาย", "mouth", "#ff6b81", "#ffffff"], ["en", "hand", "แฮนด์", "มือ", "ร่างกาย", "hand", "#ffcba4", "#4a3b52"], ["en", "foot", "ฟุต", "เท้า", "ร่างกาย", "foot", "#a8d8ff", "#4a3b52"], ["en", "heart", "ฮาร์ท", "หัวใจ", "ร่างกาย", "heart", "#ff6b81", "#ffb3c7"], ["en", "tooth", "ทูธ", "ฟัน", "ร่างกาย", "tooth", "#ffffff", "#a8d8ff"], ["en", "sun", "ซัน", "ดวงอาทิตย์", "ธรรมชาติ", "sun", "#fff1a8", "#ff9f43"], ["en", "moon", "มูน", "ดวงจันทร์", "ธรรมชาติ", "moon", "#fff1a8", "#cdb4ff"], ["en", "star", "สตาร์", "ดาว", "ธรรมชาติ", "star", "#fff1a8", "#ff9f43"], ["en", "cloud", "คลาวด์", "ก้อนเมฆ", "ธรรมชาติ", "cloud", "#ffffff", "#a8d8ff"], ["en", "rain", "เรน", "ฝนตก", "ธรรมชาติ", "rain", "#a8d8ff", "#4a3b52"], ["en", "rainbow", "เรน-โบว์", "สายรุ้ง", "ธรรมชาติ", "rainbow", "#ffb3c7", "#a8e6cf"], ["en", "tree", "ทรี", "ต้นไม้", "ธรรมชาติ", "tree", "#a8e6cf", "#ffcba4"], ["en", "flower", "ฟลาว-เวอร์", "ดอกไม้", "ธรรมชาติ", "flower", "#ffb3c7", "#fff1a8"], ["en", "car", "คาร์", "รถยนต์", "ยานพาหนะ", "car", "#ff6b81", "#fff1a8"], ["en", "train", "เทรน", "รถไฟ", "ยานพาหนะ", "train", "#a8d8ff", "#ff9f43"], ["en", "bus", "บัส", "รถโดยสาร", "ยานพาหนะ", "bus", "#fff1a8", "#ff9f43"], ["en", "airplane", "แอร์-เพลน", "เครื่องบิน", "ยานพาหนะ", "airplane", "#a8d8ff", "#ffffff"], ["en", "boat", "โบ๊ท", "เรือ", "ยานพาหนะ", "boat", "#ffcba4", "#a8d8ff"], ["en", "bicycle", "ไบ-ซิ-เคิล", "จักรยาน", "ยานพาหนะ", "bicycle", "#a8e6cf", "#ff6b81"], ["en", "rocket", "ร็อค-เก็ท", "จรวด", "ยานพาหนะ", "rocket", "#cdb4ff", "#ff9f43"], ["en", "submarine", "ซับ-มะ-รีน", "เรือดำน้ำ", "ยานพาหนะ", "submarine", "#fff1a8", "#a8d8ff"], ["en", "house", "เฮาส์", "บ้าน", "ของใช้ในบ้าน", "house", "#ffcba4", "#ff6b81"], ["en", "bed", "เบด", "เตียงนอน", "ของใช้ในบ้าน", "bed", "#cdb4ff", "#fff1a8"], ["en", "chair", "แชร์", "เก้าอี้", "ของใช้ในบ้าน", "chair", "#ffcba4", "#4a3b52"], ["en", "clock", "คล็อค", "นาฬิกา", "ของใช้ในบ้าน", "clock", "#fff1a8", "#a8d8ff"], ["en", "lamp", "แลมป์", "โคมไฟ", "ของใช้ในบ้าน", "lamp", "#fff1a8", "#ffb3c7"], ["en", "fan", "แฟน", "พัดลม", "ของใช้ในบ้าน", "fan", "#a8e6cf", "#a8d8ff"], ["en", "key", "คีย์", "กุญแจ", "ของใช้ในบ้าน", "key", "#fff1a8", "#ff9f43"], ["en", "umbrella", "อัม-เบรล-ละ", "ร่ม", "ของใช้ในบ้าน", "umbrella", "#ffb3c7", "#cdb4ff"], ["en", "book", "บุ๊ค", "หนังสือ", "การเรียน", "book", "#a8d8ff", "#fff1a8"], ["en", "pencil", "เพน-ซิล", "ดินสอ", "การเรียน", "pencil", "#fff1a8", "#ffb3c7"], ["en", "bag", "แบ็ก", "กระเป๋า", "การเรียน", "bag", "#ffb3c7", "#cdb4ff"], ["en", "scissors", "ซิส-เซอร์ส", "กรรไกร", "การเรียน", "scissors", "#a8e6cf", "#4a3b52"], ["en", "ruler", "รู-เลอร์", "ไม้บรรทัด", "การเรียน", "ruler", "#fff1a8", "#ff9f43"], ["en", "globe", "โกลบ", "ลูกโลก", "การเรียน", "globe", "#a8d8ff", "#a8e6cf"], ["en", "bell", "เบลล์", "กระดิ่ง", "การเรียน", "bell", "#fff1a8", "#ff9f43"], ["en", "paintbrush", "เพนท์-บรัช", "พู่กัน", "การเรียน", "paintbrush", "#cdb4ff", "#ff6b81"], ["en", "egg", "เอ้ก", "ไข่", "อาหาร", "egg", "#fff1a8", "#ffffff"], ["en", "bread", "เบรด", "ขนมปัง", "อาหาร", "bread", "#ffcba4", "#ff9f43"], ["en", "milk", "มิลค์", "นม", "อาหาร", "milk", "#ffffff", "#a8d8ff"], ["en", "ice cream", "ไอซ์-ครีม", "ไอศกรีม", "อาหาร", "icecream", "#ffb3c7", "#ffcba4"], ["en", "cake", "เค้ก", "ขนมเค้ก", "อาหาร", "cake", "#ffb3c7", "#fff1a8"], ["en", "pizza", "พิซ-ซ่า", "พิซซ่า", "อาหาร", "pizza", "#fff1a8", "#ff6b81"], ["en", "rice", "ไรซ์", "ข้าวสวย", "อาหาร", "rice", "#ffffff", "#a8e6cf"], ["en", "donut", "โด-นัท", "โดนัท", "อาหาร", "donut", "#ffb3c7", "#ffcba4"], ["en", "hat", "แฮท", "หมวก", "เครื่องแต่งกาย", "hat", "#fff1a8", "#ff6b81"], ["en", "t-shirt", "ที-เชิร์ต", "เสื้อยืด", "เครื่องแต่งกาย", "shirt", "#a8d8ff", "#fff1a8"], ["en", "shoe", "ชู", "รองเท้า", "เครื่องแต่งกาย", "shoe", "#ff6b81", "#ffffff"], ["en", "sock", "ซ็อค", "ถุงเท้า", "เครื่องแต่งกาย", "sock", "#a8e6cf", "#ffb3c7"], ["en", "glasses", "กลาส-เซส", "แว่นตา", "เครื่องแต่งกาย", "glasses", "#cdb4ff", "#a8d8ff"], ["en", "crown", "คราวน์", "มงกุฎ", "เครื่องแต่งกาย", "crown", "#fff1a8", "#ff9f43"], ["en", "watch", "วอทช์", "นาฬิกาข้อมือ", "เครื่องแต่งกาย", "watch", "#a8e6cf", "#fff1a8"], ["en", "skirt", "สเกิร์ต", "กระโปรง", "เครื่องแต่งกาย", "skirt", "#ffb3c7", "#cdb4ff"], ["en", "whale", "เวล", "วาฬ", "สัตว์ทะเล", "whale", "#a8d8ff", "#ffffff"], ["en", "crab", "แครบ", "ปู", "สัตว์ทะเล", "crab", "#ff6b81", "#ffcba4"], ["en", "octopus", "ออค-โท-พัส", "หมึกยักษ์", "สัตว์ทะเล", "octopus", "#cdb4ff", "#ffb3c7"], ["en", "sea turtle", "ซี-เทอร์-เทิล", "เต่าทะเล", "สัตว์ทะเล", "turtle", "#a8e6cf", "#ffcba4"], ["en", "shark", "ชาร์ค", "ฉลาม", "สัตว์ทะเล", "shark", "#a8d8ff", "#4a3b52"], ["en", "starfish", "สตาร์-ฟิช", "ปลาดาว", "สัตว์ทะเล", "starfish", "#ff9f43", "#fff1a8"], ["en", "jellyfish", "เจล-ลี-ฟิช", "แมงกะพรุน", "สัตว์ทะเล", "jellyfish", "#ffb3c7", "#cdb4ff"], ["en", "seashell", "ซี-เชลล์", "เปลือกหอย", "สัตว์ทะเล", "shell", "#ffcba4", "#fff1a8"], ["en", "bee", "บี", "ผึ้ง", "แมลงตัวจิ๋ว", "bee", "#fff1a8", "#4a3b52"], ["en", "ladybug", "เล-ดี-บั๊ก", "เต่าทอง", "แมลงตัวจิ๋ว", "ladybug", "#ff6b81", "#4a3b52"], ["en", "ant", "แอนท์", "มด", "แมลงตัวจิ๋ว", "ant", "#ff9f43", "#4a3b52"], ["en", "snail", "สเนล", "หอยทาก", "แมลงตัวจิ๋ว", "snail", "#ffcba4", "#a8e6cf"], ["en", "spider", "สไป-เดอร์", "แมงมุม", "แมลงตัวจิ๋ว", "spider", "#cdb4ff", "#4a3b52"], ["en", "caterpillar", "แคท-เทอร์-พิล-ลาร์", "หนอนน้อย", "แมลงตัวจิ๋ว", "caterpillar", "#a8e6cf", "#fff1a8"], ["en", "dragonfly", "ดราก-อน-ฟลาย", "แมลงปอ", "แมลงตัวจิ๋ว", "dragonfly", "#a8d8ff", "#a8e6cf"], ["en", "firefly", "ไฟร์-ฟลาย", "หิ่งห้อย", "แมลงตัวจิ๋ว", "firefly", "#fff1a8", "#4a3b52"], ["en", "ball", "บอล", "ลูกบอล", "กีฬาและของเล่น", "ball", "#ff6b81", "#fff1a8"], ["en", "kite", "ไคท์", "ว่าว", "กีฬาและของเล่น", "kite", "#cdb4ff", "#ffb3c7"], ["en", "robot", "โร-บ็อท", "หุ่นยนต์", "กีฬาและของเล่น", "robot", "#a8d8ff", "#ff9f43"], ["en", "teddy bear", "เท็ด-ดี-แบร์", "ตุ๊กตาหมี", "กีฬาและของเล่น", "bear", "#ffcba4", "#ffb3c7"], ["en", "drum", "ดรัม", "กลอง", "กีฬาและของเล่น", "drum", "#ff6b81", "#fff1a8"], ["en", "balloon", "บัล-ลูน", "ลูกโป่ง", "กีฬาและของเล่น", "balloon", "#ffb3c7", "#a8d8ff"], ["en", "blocks", "บล็อคส์", "ตัวต่อไม้", "กีฬาและของเล่น", "blocks", "#a8e6cf", "#fff1a8"], ["en", "skateboard", "สเก็ต-บอร์ด", "สเก็ตบอร์ด", "กีฬาและของเล่น", "skateboard", "#ff9f43", "#a8d8ff"], ["en", "guitar", "กี-ตาร์", "กีตาร์", "ดนตรี", "guitar", "#ffcba4", "#ff9f43"], ["en", "piano", "เปีย-โน", "เปียโน", "ดนตรี", "piano", "#ffffff", "#4a3b52"], ["en", "bell", "เบลล์", "ระฆัง", "ดนตรี", "bell", "#fff1a8", "#ff9f43"], ["en", "flute", "ฟลูท", "ขลุ่ย", "ดนตรี", "flute", "#a8e6cf", "#4a3b52"], ["en", "trumpet", "ทรัม-เพ็ท", "แตร", "ดนตรี", "trumpet", "#fff1a8", "#ff9f43"], ["en", "microphone", "ไม-โคร-โฟน", "ไมโครโฟน", "ดนตรี", "mic", "#cdb4ff", "#ffb3c7"], ["en", "note", "โน้ต", "ตัวโน้ตดนตรี", "ดนตรี", "note", "#ffb3c7", "#a8d8ff"], ["en", "maracas", "มะ-รา-คัส", "มาราคัส", "ดนตรี", "maracas", "#fff1a8", "#ff6b81"], ["en", "carrot", "แคร์-รอท", "แครอท", "ผักมีประโยชน์", "carrot", "#ff9f43", "#a8e6cf"], ["en", "corn", "คอร์น", "ข้าวโพด", "ผักมีประโยชน์", "corn", "#fff1a8", "#a8e6cf"], ["en", "tomato", "โท-เม-โท", "มะเขือเทศ", "ผักมีประโยชน์", "tomato", "#ff6b81", "#a8e6cf"], ["en", "pumpkin", "พัมพ์-คิน", "ฟักทอง", "ผักมีประโยชน์", "pumpkin", "#ff9f43", "#a8e6cf"], ["en", "broccoli", "บร็อค-โค-ลี", "บรอกโคลี", "ผักมีประโยชน์", "broccoli", "#a8e6cf", "#4a3b52"], ["en", "mushroom", "มัช-รูม", "เห็ด", "ผักมีประโยชน์", "mushroom", "#ffb3c7", "#fff1a8"], ["en", "onion", "อัน-ยัน", "หัวหอม", "ผักมีประโยชน์", "onion", "#cdb4ff", "#fff1a8"], ["en", "bell pepper", "เบลล์-เพพ-เพอร์", "พริกหยวก", "ผักมีประโยชน์", "pepper", "#a8e6cf", "#fff1a8"], ["en", "lion", "ไล-ออน", "สิงโต", "สัตว์ป่า", "lion", "#fff1a8", "#ff9f43"], ["en", "monkey", "มัง-คี", "ลิง", "สัตว์ป่า", "monkey", "#ffcba4", "#ff9f43"], ["en", "giraffe", "จิ-ราฟ", "ยีราฟ", "สัตว์ป่า", "giraffe", "#fff1a8", "#ff9f43"], ["en", "panda", "แพน-ด้า", "แพนด้า", "สัตว์ป่า", "panda", "#ffffff", "#4a3b52"], ["en", "frog", "ฟร็อก", "กบ", "สัตว์ป่า", "frog", "#a8e6cf", "#fff1a8"], ["en", "penguin", "เพน-กวิน", "เพนกวิน", "สัตว์ป่า", "penguin", "#a8d8ff", "#ff9f43"], ["en", "fox", "ฟ็อกซ์", "สุนัขจิ้งจอก", "สัตว์ป่า", "fox", "#ff9f43", "#ffffff"], ["en", "owl", "เอาล์", "นกฮูก", "สัตว์ป่า", "owl", "#cdb4ff", "#fff1a8"], ["en", "cup", "คัพ", "ถ้วยน้ำ", "เครื่องครัว", "cup", "#a8d8ff", "#ffffff"], ["en", "spoon", "สปูน", "ช้อน", "เครื่องครัว", "spoon", "#fff1a8", "#4a3b52"], ["en", "plate", "เพลท", "จาน", "เครื่องครัว", "plate", "#ffffff", "#ffb3c7"], ["en", "teapot", "ที-พ็อท", "กาน้ำชา", "เครื่องครัว", "teapot", "#a8e6cf", "#fff1a8"], ["en", "pot", "พ็อท", "หม้อ", "เครื่องครัว", "pot", "#ff9f43", "#4a3b52"], ["en", "bottle", "บ็อท-เทิล", "ขวดน้ำ", "เครื่องครัว", "bottle", "#a8d8ff", "#a8e6cf"], ["en", "bowl", "โบลว์", "ชาม", "เครื่องครัว", "bowl", "#ffb3c7", "#fff1a8"], ["en", "pan", "แพน", "กระทะ", "เครื่องครัว", "pan", "#cdb4ff", "#fff1a8"], ["en", "wind", "วินด์", "ลมพัด", "อากาศ", "wind", "#a8e6cf", "#a8d8ff"], ["en", "snow", "สโนว์", "หิมะ", "อากาศ", "snow", "#ffffff", "#a8d8ff"], ["en", "lightning", "ไลท์-นิง", "ฟ้าผ่า", "อากาศ", "lightning", "#fff1a8", "#ff9f43"], ["en", "dewdrop", "ดิว-ดร็อป", "น้ำค้าง", "อากาศ", "dew", "#a8d8ff", "#a8e6cf"], ["en", "thermometer", "เธอร์-มอม-มิ-เตอร์", "ปรอทวัดอากาศ", "อากาศ", "thermo", "#ff6b81", "#ffffff"], ["en", "tornado", "ทอร์-เน-โด", "พายุหมุน", "อากาศ", "tornado", "#cdb4ff", "#a8d8ff"], ["en", "snowman", "สโนว์-แมน", "ตุ๊กตาหิมะ", "อากาศ", "snowman", "#ffffff", "#ff9f43"], ["en", "sunset", "ซัน-เซ็ท", "พระอาทิตย์ตก", "อากาศ", "sunset", "#ff9f43", "#ffb3c7"], ["en", "earth", "เอิร์ธ", "โลกของเรา", "อวกาศ", "globe", "#a8d8ff", "#a8e6cf"], ["en", "Saturn", "แซท-เทิร์น", "ดาวเสาร์", "อวกาศ", "saturn", "#fff1a8", "#ffb3c7"], ["en", "astronaut", "แอส-โทร-นอท", "นักบินอวกาศ", "อวกาศ", "astro", "#ffffff", "#a8d8ff"], ["en", "telescope", "เทล-เล-สโคป", "กล้องดูดาว", "อวกาศ", "telescope", "#cdb4ff", "#fff1a8"], ["en", "comet", "คอม-เม็ท", "ดาวหาง", "อวกาศ", "comet", "#fff1a8", "#a8d8ff"], ["en", "UFO", "ยู-เอฟ-โอ", "จานบิน", "อวกาศ", "ufo", "#a8e6cf", "#cdb4ff"], ["en", "planet", "แพลน-เน็ท", "ดาวเคราะห์", "อวกาศ", "planet", "#ffb3c7", "#ff9f43"], ["en", "galaxy", "แก-แล็ก-ซี", "ทางช้างเผือก", "อวกาศ", "galaxy", "#cdb4ff", "#fff1a8"], ["en", "doctor", "ด็อค-เตอร์", "คุณหมอ", "อาชีพ", "doctor", "#ffffff", "#ff6b81"], ["en", "police", "โพลีซ", "ตำรวจ", "อาชีพ", "police", "#a8d8ff", "#fff1a8"], ["en", "chef", "เชฟ", "พ่อครัว", "อาชีพ", "chef", "#ffffff", "#ff9f43"], ["en", "firefighter", "ไฟร์-ไฟ-เทอร์", "นักดับเพลิง", "อาชีพ", "firefighter", "#ff6b81", "#fff1a8"], ["en", "artist", "อาร์-ทิสต์", "จิตรกร", "อาชีพ", "palette", "#ffb3c7", "#fff1a8"], ["en", "farmer", "ฟาร์ม-เมอร์", "ชาวนา", "อาชีพ", "farmer", "#fff1a8", "#a8e6cf"], ["en", "pilot", "ไพ-ล็อท", "นักบิน", "อาชีพ", "pilot", "#a8d8ff", "#fff1a8"], ["en", "teacher", "ทีช-เชอร์", "คุณครู", "อาชีพ", "teacher", "#a8e6cf", "#ffb3c7"], ["en", "circle", "เซอร์-เคิล", "วงกลม", "รูปทรง", "circle", "#ffb3c7", "#4a3b52"], ["en", "triangle", "ไทร-แอง-เกิล", "สามเหลี่ยม", "รูปทรง", "triangle", "#fff1a8", "#4a3b52"], ["en", "square", "สแควร์", "สี่เหลี่ยมจัตุรัส", "รูปทรง", "square", "#a8d8ff", "#4a3b52"], ["en", "diamond", "ได-มอนด์", "รูปเพชร / ข้าวหลามตัด", "รูปทรง", "diamond", "#cdb4ff", "#ffffff"], ["en", "oval", "โอ-วัล", "วงรี", "รูปทรง", "oval", "#a8e6cf", "#4a3b52"], ["en", "spiral", "สไป-รัล", "เกลียวคลื่น", "รูปทรง", "spiral", "#ff9f43", "#fff1a8"], ["en", "cube", "คิวบ์", "ลูกบาศก์", "รูปทรง", "cube", "#ffcba4", "#ff6b81"], ["en", "hearts", "ฮาร์ทส์", "หัวใจคู่", "รูปทรง", "hearts", "#ff6b81", "#ffb3c7"], ["en", "jump", "จัมพ์", "กระโดด", "การกระทำ", "jump", "#fff1a8", "#ff9f43"], ["en", "run", "รัน", "วิ่ง", "การกระทำ", "run", "#a8e6cf", "#4a3b52"], ["en", "sleep", "สลีป", "นอนหลับ", "การกระทำ", "sleep", "#cdb4ff", "#fff1a8"], ["en", "swim", "สวิม", "ว่ายน้ำ", "การกระทำ", "swim", "#a8d8ff", "#ffffff"], ["en", "dance", "แดนซ์", "เต้นรำ", "การกระทำ", "dance", "#ffb3c7", "#fff1a8"], ["en", "read", "รีด", "อ่านหนังสือ", "การกระทำ", "read", "#a8e6cf", "#ffcba4"], ["en", "sing", "ซิง", "ร้องเพลง", "การกระทำ", "sing", "#ff9f43", "#ffb3c7"], ["en", "smile", "สไมล์", "ยิ้มแย้ม", "การกระทำ", "smile", "#fff1a8", "#ff6b81"], ["en", "school", "สคูล", "โรงเรียน", "สถานที่", "school", "#fff1a8", "#ff6b81"], ["en", "park", "พาร์ค", "สวนสนุก / สวนสาธารณะ", "สถานที่", "ferris", "#ffb3c7", "#a8d8ff"], ["en", "beach", "บีช", "ชายหาด", "สถานที่", "beach", "#fff1a8", "#a8d8ff"], ["en", "mountain", "เมาน์-เทิน", "ภูเขา", "สถานที่", "mountain", "#a8e6cf", "#ffffff"], ["en", "bridge", "บริดจ์", "สะพาน", "สถานที่", "bridge", "#ffcba4", "#a8d8ff"], ["en", "lighthouse", "ไลท์-เฮาส์", "ประภาคาร", "สถานที่", "lighthouse", "#ff6b81", "#fff1a8"], ["en", "tent", "เท็นท์", "เต็นท์พักแรม", "สถานที่", "tent", "#a8e6cf", "#ff9f43"], ["en", "castle", "แคส-เซิล", "ปราสาท", "สถานที่", "castle", "#cdb4ff", "#ffb3c7"], ["en", "soap", "โซป", "สบู่", "ของใช้ส่วนตัว", "soap", "#ffb3c7", "#ffffff"], ["en", "toothbrush", "ทูธ-บรัช", "แปรงสีฟัน", "ของใช้ส่วนตัว", "toothbrush", "#a8d8ff", "#fff1a8"], ["en", "towel", "ทาว-เอิล", "ผ้าเช็ดตัว", "ของใช้ส่วนตัว", "towel", "#a8e6cf", "#fff1a8"], ["en", "comb", "โคมบ์", "หวี", "ของใช้ส่วนตัว", "comb", "#cdb4ff", "#ffb3c7"], ["en", "mirror", "มิร์-เรอร์", "กระจกเงา", "ของใช้ส่วนตัว", "mirror", "#a8d8ff", "#ffffff"], ["en", "bathtub", "บาธ-ทับ", "อ่างอาบน้ำ", "ของใช้ส่วนตัว", "bathtub", "#ffffff", "#a8d8ff"], ["en", "rubber duck", "รับ-เบอร์-ดัค", "เป็ดยาง", "ของใช้ส่วนตัว", "duck", "#fff1a8", "#ff9f43"], ["en", "bubbles", "บับ-เบิลส์", "ฟองสบู่", "ของใช้ส่วนตัว", "bubbles", "#a8d8ff", "#ffb3c7"], ["en", "hammer", "แฮม-เมอร์", "ค้อน", "เครื่องมือ", "hammer", "#ffcba4", "#4a3b52"], ["en", "wrench", "เรนช์", "ประแจ", "เครื่องมือ", "wrench", "#a8d8ff", "#4a3b52"], ["en", "ladder", "แลด-เดอร์", "บันได", "เครื่องมือ", "ladder", "#fff1a8", "#ff9f43"], ["en", "flashlight", "แฟลช-ไลท์", "ไฟฉาย", "เครื่องมือ", "flashlight", "#fff1a8", "#ff6b81"], ["en", "magnet", "แม็ก-เน็ท", "แม่เหล็ก", "เครื่องมือ", "magnet", "#ff6b81", "#a8d8ff"], ["en", "magnifier", "แม็ก-นิ-ไฟ-เออร์", "แว่นขยาย", "เครื่องมือ", "magnifier", "#a8e6cf", "#a8d8ff"], ["en", "gear", "เกียร์", "ฟันเฟือง", "เครื่องมือ", "gear", "#cdb4ff", "#ff9f43"], ["en", "compass", "คัม-พัส", "เข็มทิศ", "เครื่องมือ", "compass", "#fff1a8", "#ff6b81"], ["en", "leaf", "ลีฟ", "ใบไม้", "สวนสวย", "leaf", "#a8e6cf", "#ff9f43"], ["en", "sunflower", "ซัน-ฟลาว-เวอร์", "ดอกทานตะวัน", "สวนสวย", "sunflower", "#fff1a8", "#ff9f43"], ["en", "cactus", "แคค-ทัส", "กระบองเพชร", "สวนสวย", "cactus", "#a8e6cf", "#ffb3c7"], ["en", "watering can", "วอ-เทอร์-ริง แคน", "บัวรดน้ำ", "สวนสวย", "watering", "#a8d8ff", "#a8e6cf"], ["en", "acorn", "เอ-คอร์น", "ลูกโอ๊ก", "สวนสวย", "acorn", "#ffcba4", "#ff9f43"], ["en", "clover", "โคล-เวอร์", "ใบโคลเวอร์", "สวนสวย", "clover", "#a8e6cf", "#fff1a8"], ["en", "tulip", "ทิว-ลิป", "ดอกทิวลิป", "สวนสวย", "tulip", "#ffb3c7", "#a8e6cf"], ["en", "sprout", "สเปราท์", "ต้นกล้า", "สวนสวย", "sprout", "#a8e6cf", "#ffcba4"], ["en", "gift", "กิฟท์", "ของขวัญ", "วันพิเศษ", "gift", "#ffb3c7", "#fff1a8"], ["en", "trophy", "โทร-ฟี", "ถ้วยรางวัล", "วันพิเศษ", "trophy", "#fff1a8", "#ff9f43"], ["en", "medal", "เมด-เดิล", "เหรียญรางวัล", "วันพิเศษ", "medal", "#fff1a8", "#ff6b81"], ["en", "fireworks", "ไฟร์-เวิร์คส์", "พลุไฟ", "วันพิเศษ", "fireworks", "#ffb3c7", "#a8d8ff"], ["en", "flag", "แฟล็ก", "ธง", "วันพิเศษ", "flag", "#a8e6cf", "#ff9f43"], ["en", "lantern", "แลน-เทิร์น", "โคมลอย", "วันพิเศษ", "lantern", "#fff1a8", "#ff9f43"], ["en", "camera", "แคม-เมอ-รา", "กล้องถ่ายรูป", "วันพิเศษ", "camera", "#cdb4ff", "#a8d8ff"], ["en", "well done!", "เวล-ดัน", "เก่งมาก!", "วันพิเศษ", "trophy", "#fff1a8", "#ff6b81"]];
+
+const TH_DAYS_FULL = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+const TH_DAYS_SHORT = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+const TH_MON = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+function parseISO(iso){
+  const [y,m,d] = iso.split('-').map(Number);
+  return new Date(y, m-1, d, 12);
+}
+function fmtDateTH(iso){
+  const [y,m,d] = iso.split('-').map(Number);
+  return `${d} ${TH_MON[m-1]} ${y+543}`;
+}
+function dayNameTH(iso){
+  return TH_DAYS_FULL[parseISO(iso).getDay()];
+}
+function dayShortTH(iso){
+  return TH_DAYS_SHORT[parseISO(iso).getDay()];
+}
+function todayISO(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function nextPlayDayFrom(iso){
+  const found = PLAY_DAYS.find(s => s >= iso);
+  return found || PLAY_DAYS[PLAY_DAYS.length - 1];
+}
+function daysBetween(a, b){
+  return Math.round((parseISO(b) - parseISO(a)) / 86400000);
+}
+
+/* ====== 2. สถานะและบันทึกความก้าวหน้า ====== */
+const STORAGE_KEY = 'lf_weekday_explorer_v3';
+let saved = { completedDays: {}, parentUnlock: false };
+try{
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw) saved = { ...saved, ...JSON.parse(raw) };
+}catch(e){}
+function persist(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); }catch(e){}
+}
+
+const state = {
+  screen: 'play', // 'play' | 'calendar' | 'summary'
+  dayIdx: 0,      // 0..129
+  words: [],      // 8 English words per day
+  idx: 0,
+  status: [],     // '' | 'known' | 'review'
+  reviewOnly: false
+};
+
+function getDayWords(dayIdx){
+  // 26 sets x 8 words = 208 words, cycling smoothly across the 130 Mon-Fri days (5 full rounds of 26 sets)
+  const setIdx = dayIdx % 26;
+  return WORDS_DB.slice(setIdx * 8, setIdx * 8 + 8).map((w, i) => ({
+    id: `${dayIdx}-${i}`,
+    lang: 'en',
+    text: w[1],
+    reading: w[2],
+    meaning: w[3],
+    cat: w[4],
+    anim: w[5],
+    c1: w[6],
+    c2: w[7]
+  }));
+}
+
+function initDaySession(dIdx, onlyReview = false){
+  state.dayIdx = Math.max(0, Math.min(PLAY_DAYS.length - 1, dIdx));
+  const baseWords = getDayWords(state.dayIdx);
+  if(onlyReview){
+    const rev = baseWords.filter((_, i) => state.status[i] === 'review');
+    state.words = rev.length ? rev : baseWords;
+    state.reviewOnly = rev.length > 0;
+  } else {
+    state.words = baseWords;
+    state.reviewOnly = false;
+  }
+  state.idx = 0;
+  state.status = Array(state.words.length).fill('');
+  state.screen = 'play';
+}
+
+/* ====== 3. เสียงอ่านคำศัพท์ภาษาอังกฤษ ====== */
+function speakWord(w){
+  if(!w) return;
+  try{
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(w.text);
+    u.lang = 'en-US';
+    u.rate = 0.84;
+    u.pitch = 1.05;
+    window.speechSynthesis.speak(u);
+  }catch(e){
+    toast('อุปกรณ์นี้ไม่รองรับเสียงอ่านอัตโนมัติ');
+  }
+}
+
+function toast(msg){
+  const box = document.getElementById('toasts');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  box.appendChild(el);
+  setTimeout(() => el.remove(), 2600);
+}
+
+/* ====== 4. ภาพเคลื่อนไหว SVG ขนาดใหญ่ 80% ครบทุกคำ ====== */
+function buildAnimatedSVG(w){
+  const { anim, c1, c2, text, cat } = w;
+  const ink = '#4a3b52';
+
+  const scenes = {
+    cat: `<g class="anim-wobble">
+      <polygon points="58,72 48,34 84,56" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <polygon points="142,72 152,34 116,56" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <circle cx="100" cy="108" r="54" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="80" cy="100" r="7" fill="${ink}"/><circle cx="120" cy="100" r="7" fill="${ink}"/>
+      <circle cx="82" cy="98" r="2.5" fill="#fff"/><circle cx="122" cy="98" r="2.5" fill="#fff"/>
+      <polygon points="94,114 106,114 100,121" fill="#ff6b81" stroke="${ink}" stroke-width="3"/>
+      <path d="M88,126 Q100,136 112,126" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+      <line x1="30" y1="106" x2="62" y2="110" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+      <line x1="30" y1="120" x2="62" y2="118" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+      <line x1="170" y1="106" x2="138" y2="110" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+      <line x1="170" y1="120" x2="138" y2="118" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+    </g>`,
+
+    dog: `<g class="anim-bounce">
+      <ellipse cx="48" cy="102" rx="18" ry="36" transform="rotate(15 48 102)" fill="#d99b66" stroke="${ink}" stroke-width="5"/>
+      <ellipse cx="152" cy="102" rx="18" ry="36" transform="rotate(-15 152 102)" fill="#d99b66" stroke="${ink}" stroke-width="5"/>
+      <circle cx="100" cy="106" r="52" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="80" cy="96" r="7" fill="${ink}"/><circle cx="120" cy="96" r="7" fill="${ink}"/>
+      <ellipse cx="100" cy="114" rx="12" ry="9" fill="${ink}"/>
+      <path d="M88,128 Q100,142 112,128" fill="#ff6b81" stroke="${ink}" stroke-width="4"/>
+    </g>`,
+
+    rabbit: `<g class="anim-bounce">
+      <ellipse cx="76" cy="48" rx="14" ry="38" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <ellipse cx="124" cy="48" rx="14" ry="38" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <ellipse cx="76" cy="50" rx="7" ry="26" fill="${c2}"/>
+      <ellipse cx="124" cy="50" rx="7" ry="26" fill="${c2}"/>
+      <circle cx="100" cy="118" r="48" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="82" cy="110" r="6" fill="${ink}"/><circle cx="118" cy="110" r="6" fill="${ink}"/>
+      <circle cx="100" cy="122" r="6" fill="${c2}"/>
+      <path d="M88,132 Q100,140 112,132" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+    </g>`,
+
+    elephant: `<g class="anim-wobble">
+      <ellipse cx="46" cy="102" rx="28" ry="40" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <ellipse cx="154" cy="102" rx="28" ry="40" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="100" cy="100" r="48" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path d="M90,115 Q90,168 122,162 Q134,158 126,146 Q112,150 110,115" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="80" cy="92" r="6" fill="${ink}"/><circle cx="120" cy="92" r="6" fill="${ink}"/>
+    </g>`,
+
+    bird: `<g class="anim-fly">
+      <ellipse cx="100" cy="108" rx="44" ry="34" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path class="wing-l" d="M82,102 Q42,68 58,118 Z" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <polygon points="142,102 168,110 142,118" fill="${c2}" stroke="${ink}" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="122" cy="98" r="6" fill="${ink}"/>
+    </g>`,
+
+    fish: `<g class="anim-swim">
+      <polygon points="36,100 10,70 10,130" fill="${c2}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <ellipse cx="104" cy="100" rx="64" ry="38" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="136" cy="90" r="7" fill="${ink}"/><circle cx="138" cy="88" r="2.5" fill="#fff"/>
+      <path d="M96,84 Q84,100 96,116" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="176" cy="64" r="6" fill="#a8d8ff" stroke="${ink}" stroke-width="3"/>
+      <circle cx="186" cy="46" r="4" fill="#a8d8ff" stroke="${ink}" stroke-width="2.5"/>
+    </g>`,
+
+    duck: `<g class="anim-wobble">
+      <ellipse cx="96" cy="126" rx="52" ry="34" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="124" cy="76" r="28" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <ellipse cx="156" cy="80" rx="18" ry="9" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <circle cx="130" cy="68" r="5" fill="${ink}"/>
+    </g>`,
+
+    butterfly: `<g class="anim-float">
+      <ellipse class="wing-l" cx="68" cy="84" rx="34" ry="26" fill="${c1}" stroke="${ink}" stroke-width="4"/>
+      <ellipse class="wing-l" cx="72" cy="124" rx="26" ry="22" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <ellipse class="wing-r" cx="132" cy="84" rx="34" ry="26" fill="${c1}" stroke="${ink}" stroke-width="4"/>
+      <ellipse class="wing-r" cx="128" cy="124" rx="26" ry="22" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <rect x="94" y="64" width="12" height="76" rx="6" fill="${ink}"/>
+      <path d="M96,64 Q82,42 74,46 M104,64 Q118,42 126,46" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+    </g>`,
+
+    apple: `<g class="anim-bounce">
+      <path d="M100,56 Q104,34 118,30" fill="none" stroke="${ink}" stroke-width="5" stroke-linecap="round"/>
+      <ellipse cx="122" cy="44" rx="18" ry="9" transform="rotate(-20 122 44)" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <path d="M100,64 C68,50 42,76 48,116 C54,152 84,166 100,156 C116,166 146,152 152,116 C158,76 132,50 100,64 Z" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path d="M68,84 Q62,102 68,118" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    </g>`,
+
+    banana: `<g class="anim-wobble">
+      <path d="M52,52 Q46,136 148,150 Q158,134 144,124 Q82,112 72,48 Z" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <rect x="48" y="42" width="14" height="12" rx="4" fill="${ink}"/>
+    </g>`,
+
+    orange: `<g class="anim-pulse">
+      <circle cx="100" cy="108" r="54" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <ellipse cx="116" cy="46" rx="20" ry="10" transform="rotate(-18 116 46)" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <circle cx="82" cy="96" r="3" fill="${ink}"/><circle cx="118" cy="112" r="3" fill="${ink}"/><circle cx="94" cy="128" r="3" fill="${ink}"/>
+    </g>`,
+
+    watermelon: `<g class="anim-wobble">
+      <path d="M32,84 A68,68 0 0,0 168,84 Z" fill="${c2}" stroke="${ink}" stroke-width="5"/>
+      <path d="M44,84 A56,56 0 0,0 156,84 Z" fill="${c1}" stroke="${ink}" stroke-width="4"/>
+      <circle cx="80" cy="104" r="4" fill="${ink}"/><circle cx="100" cy="116" r="4" fill="${ink}"/><circle cx="120" cy="104" r="4" fill="${ink}"/>
+    </g>`,
+
+    sun: `<g class="anim-spin">
+      <circle cx="100" cy="100" r="44" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      ${[0,45,90,135,180,225,270,315].map(a=>`<line x1="100" y1="24" x2="100" y2="42" stroke="${c2}" stroke-width="7" stroke-linecap="round" transform="rotate(${a} 100 100)"/>`).join('')}
+    </g>`,
+
+    moon: `<g class="anim-float">
+      <path d="M116,38 A62,62 0 1,0 156,142 A48,48 0 1,1 116,38 Z" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <circle cx="144" cy="64" r="6" fill="${c2}" class="anim-twinkle"/>
+      <circle cx="158" cy="94" r="4" fill="${c2}" class="anim-twinkle"/>
+    </g>`,
+
+    star: `<g class="anim-pulse">
+      <polygon points="100,26 122,74 174,80 136,116 146,168 100,142 54,168 64,116 26,80 78,74" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <circle cx="86" cy="98" r="5" fill="${ink}"/><circle cx="114" cy="98" r="5" fill="${ink}"/>
+      <path d="M92,114 Q100,122 108,114" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+    </g>`,
+
+    cloud: `<g class="anim-float">
+      <path d="M56,136 H148 A28,28 0 0,0 144,80 A38,38 0 0,0 72,74 A30,30 0 0,0 56,136 Z" fill="#fff" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <circle cx="88" cy="106" r="5" fill="${ink}"/><circle cx="116" cy="106" r="5" fill="${ink}"/>
+      <path d="M96,118 Q102,124 108,118" fill="none" stroke="${ink}" stroke-width="3.5" stroke-linecap="round"/>
+    </g>`,
+
+    rain: `<g>
+      <path d="M54,104 H148 A26,26 0 0,0 144,54 A34,34 0 0,0 74,48 A28,28 0 0,0 54,104 Z" fill="#fff" stroke="${ink}" stroke-width="5"/>
+      <line class="anim-rain1" x1="74" y1="116" x2="66" y2="142" stroke="${c1}" stroke-width="6" stroke-linecap="round"/>
+      <line class="anim-rain2" x1="102" y1="116" x2="94" y2="142" stroke="${c1}" stroke-width="6" stroke-linecap="round"/>
+      <line class="anim-rain3" x1="130" y1="116" x2="122" y2="142" stroke="${c1}" stroke-width="6" stroke-linecap="round"/>
+    </g>`,
+
+    rainbow: `<g class="anim-pulse">
+      <path d="M30,144 A70,70 0 0,1 170,144" fill="none" stroke="#ff6b81" stroke-width="12" stroke-linecap="round"/>
+      <path d="M44,144 A56,56 0 0,1 156,144" fill="none" stroke="#fff1a8" stroke-width="12" stroke-linecap="round"/>
+      <path d="M58,144 A42,42 0 0,1 142,144" fill="none" stroke="#a8e6cf" stroke-width="12" stroke-linecap="round"/>
+      <path d="M72,144 A28,28 0 0,1 128,144" fill="none" stroke="#a8d8ff" stroke-width="12" stroke-linecap="round"/>
+    </g>`,
+
+    tree: `<g class="anim-wobble">
+      <rect x="86" y="114" width="28" height="54" rx="6" fill="${c2}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="100" cy="82" r="46" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="68" cy="96" r="30" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="132" cy="96" r="30" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+    </g>`,
+
+    flower: `<g class="anim-spin">
+      ${[0,60,120,180,240,300].map(a=>`<circle cx="100" cy="54" r="24" fill="${c1}" stroke="${ink}" stroke-width="4" transform="rotate(${a} 100 100)"/>`).join('')}
+      <circle cx="100" cy="100" r="26" fill="${c2}" stroke="${ink}" stroke-width="5"/>
+    </g>`,
+
+    car: `<g class="anim-drive">
+      <path d="M46,104 L66,68 H134 L154,104 H172 V136 H28 V104 Z" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <rect x="72" y="76" width="56" height="24" rx="6" fill="#fff" stroke="${ink}" stroke-width="4"/>
+      <circle cx="62" cy="138" r="18" fill="${ink}"/><circle cx="62" cy="138" r="8" fill="#fff"/>
+      <circle cx="138" cy="138" r="18" fill="${ink}"/><circle cx="138" cy="138" r="8" fill="#fff"/>
+    </g>`,
+
+    train: `<g class="anim-drive">
+      <rect x="34" y="78" width="124" height="56" rx="10" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <rect x="112" y="52" width="46" height="32" rx="6" fill="${c2}" stroke="${ink}" stroke-width="5"/>
+      <rect x="48" y="54" width="16" height="24" fill="${ink}"/>
+      <circle cx="54" cy="36" r="9" fill="#fff" stroke="${ink}" stroke-width="3" class="anim-float"/>
+      <circle cx="62" cy="138" r="16" fill="${ink}"/><circle cx="102" cy="138" r="16" fill="${ink}"/><circle cx="140" cy="138" r="16" fill="${ink}"/>
+    </g>`,
+
+    airplane: `<g class="anim-fly">
+      <ellipse cx="102" cy="100" rx="68" ry="20" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <polygon points="94,84 68,42 98,42 120,84" fill="${c2}" stroke="${ink}" stroke-width="4" stroke-linejoin="round"/>
+      <polygon points="94,116 68,158 98,158 120,116" fill="${c2}" stroke="${ink}" stroke-width="4" stroke-linejoin="round"/>
+      <polygon points="40,94 24,66 48,66 56,94" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+    </g>`,
+
+    boat: `<g class="anim-wobble">
+      <polygon points="100,34 100,112 152,112" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <polygon points="94,48 94,112 52,112" fill="#fff" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <polygon points="30,116 170,116 148,152 52,152" fill="${c2}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+    </g>`,
+
+    rocket: `<g class="anim-bounce">
+      <path d="M100,24 C132,56 132,114 122,140 H78 C68,114 68,56 100,24 Z" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <polygon points="76,112 46,144 78,140" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <polygon points="124,112 154,144 122,140" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <circle cx="100" cy="84" r="16" fill="#fff" stroke="${ink}" stroke-width="4"/>
+      <polygon points="86,142 100,176 114,142" fill="#ff9f43" stroke="${ink}" stroke-width="4"/>
+    </g>`,
+
+    house: `<g class="anim-pulse">
+      <polygon points="100,32 28,92 172,92" fill="${c2}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <rect x="46" y="92" width="108" height="74" rx="6" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <rect x="86" y="118" width="28" height="48" fill="#fff" stroke="${ink}" stroke-width="4"/>
+      <rect x="56" y="108" width="20" height="20" fill="#a8d8ff" stroke="${ink}" stroke-width="3.5"/>
+    </g>`,
+
+    clock: `<g class="anim-wobble">
+      <circle cx="100" cy="100" r="64" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="100" cy="100" r="52" fill="#fff" stroke="${ink}" stroke-width="3"/>
+      <line x1="100" y1="100" x2="100" y2="62" stroke="${ink}" stroke-width="6" stroke-linecap="round"/>
+      <line x1="100" y1="100" x2="132" y2="100" stroke="#ff6b81" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="100" cy="100" r="6" fill="${ink}"/>
+    </g>`,
+
+    heart: `<g class="anim-pulse">
+      <path d="M100,162 C40,120 26,74 56,50 C76,34 94,48 100,62 C106,48 124,34 144,50 C174,74 160,120 100,162 Z" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+    </g>`,
+
+    book: `<g class="anim-float">
+      <path d="M32,54 Q66,44 100,58 Q134,44 168,54 V148 Q134,138 100,152 Q66,138 32,148 Z" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <line x1="100" y1="58" x2="100" y2="152" stroke="${ink}" stroke-width="4"/>
+      <line x1="48" y1="80" x2="84" y2="82" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+      <line x1="48" y1="102" x2="84" y2="104" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+      <line x1="116" y1="82" x2="152" y2="80" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>
+    </g>`,
+
+    icecream: `<g class="anim-wobble">
+      <polygon points="72,102 128,102 100,174" fill="${c2}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <circle cx="100" cy="82" r="34" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="100" cy="44" r="10" fill="#ff6b81" stroke="${ink}" stroke-width="3.5"/>
+    </g>`,
+
+    cake: `<g class="anim-bounce">
+      <rect x="44" y="96" width="112" height="62" rx="10" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path d="M44,114 Q62,128 80,114 Q100,128 120,114 Q138,128 156,114" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+      <rect x="94" y="60" width="12" height="36" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <ellipse cx="100" cy="46" rx="8" ry="13" fill="#ff9f43" stroke="${ink}" stroke-width="3" class="anim-pulse"/>
+    </g>`,
+
+    whale: `<g class="anim-swim">
+      <path d="M32,110 C32,74 74,64 118,74 C144,80 156,96 156,114 C156,136 122,146 78,146 C48,146 32,130 32,110 Z" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <polygon points="154,106 184,82 178,112 186,136" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M96,68 Q88,42 74,46 M96,68 Q106,42 118,46" fill="none" stroke="#a8d8ff" stroke-width="5" stroke-linecap="round" class="anim-pulse"/>
+      <circle cx="62" cy="104" r="6" fill="${ink}"/>
+    </g>`,
+
+    bee: `<g class="anim-fly">
+      <ellipse class="wing-l" cx="88" cy="64" rx="22" ry="16" fill="#fff" stroke="${ink}" stroke-width="4"/>
+      <ellipse class="wing-r" cx="114" cy="64" rx="22" ry="16" fill="#fff" stroke="${ink}" stroke-width="4"/>
+      <ellipse cx="100" cy="106" rx="46" ry="32" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <line x1="84" y1="76" x2="84" y2="136" stroke="${ink}" stroke-width="8"/>
+      <line x1="106" y1="75" x2="106" y2="137" stroke="${ink}" stroke-width="8"/>
+      <circle cx="130" cy="98" r="5" fill="${ink}"/>
+    </g>`,
+
+    ball: `<g class="anim-bounce">
+      <circle cx="100" cy="100" r="58" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path d="M52,68 Q100,100 148,68 M52,132 Q100,100 148,132" fill="none" stroke="${c2}" stroke-width="8"/>
+    </g>`,
+
+    trophy: `<g class="anim-pulse">
+      <path d="M62,42 H138 V84 C138,114 62,114 62,84 Z" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path d="M62,54 H42 C34,54 34,84 62,84 M138,54 H158 C166,54 166,84 138,84" fill="none" stroke="${ink}" stroke-width="5"/>
+      <rect x="90" y="106" width="20" height="34" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <rect x="66" y="140" width="68" height="22" rx="6" fill="${c2}" stroke="${ink}" stroke-width="5"/>
+      <polygon points="100,56 105,68 118,69 108,77 111,90 100,83 89,90 92,77 82,69 95,68" fill="#fff" stroke="${ink}" stroke-width="2.5"/>
+    </g>`
+  };
+
+  if(scenes[anim]){
+    return `<svg viewBox="0 0 200 200" aria-label="${text}">${scenes[anim]}</svg>`;
+  }
+
+  const motionClass =
+    ['bird','butterfly','bee','dragonfly','firefly','kite','balloon','ufo','comet','airplane','rocket','lantern'].includes(anim) ? 'anim-fly' :
+    ['fish','whale','shark','octopus','jellyfish','turtle','boat','submarine','swim'].includes(anim) ? 'anim-swim' :
+    ['ball','jump','frog','rabbit','dog','kangaroo','skateboard','run','dance'].includes(anim) ? 'anim-bounce' :
+    ['fan','gear','wheel','ferris','tornado','spiral','windmill','clock','compass'].includes(anim) ? 'anim-spin' :
+    ['car','train','bus','bicycle','firetruck'].includes(anim) ? 'anim-drive' :
+    ['heart','hearts','star','sun','fireworks','medal','crown','diamond','lightning'].includes(anim) ? 'anim-pulse' :
+    'anim-wobble';
+
+  const badgeIcons = {
+    'สัตว์รอบตัว': `<circle cx="100" cy="106" r="50" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="64" cy="64" r="18" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="136" cy="64" r="18" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="84" cy="100" r="6" fill="${ink}"/><circle cx="116" cy="100" r="6" fill="${ink}"/>
+      <ellipse cx="100" cy="116" rx="12" ry="8" fill="${c2}" stroke="${ink}" stroke-width="3"/>`,
+    'สัตว์ป่า': `<circle cx="100" cy="104" r="52" fill="${c2}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="100" cy="104" r="38" fill="${c1}" stroke="${ink}" stroke-width="4"/>
+      <circle cx="86" cy="98" r="6" fill="${ink}"/><circle cx="114" cy="98" r="6" fill="${ink}"/>
+      <path d="M90,116 Q100,126 110,116" fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round"/>`,
+    'สัตว์ทะเล': `<ellipse cx="100" cy="104" rx="56" ry="38" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="82" cy="96" r="6" fill="${ink}"/><circle cx="118" cy="96" r="6" fill="${ink}"/>
+      <path d="M56,136 Q78,120 100,136 Q122,120 144,136" fill="none" stroke="${c2}" stroke-width="6" stroke-linecap="round"/>`,
+    'แมลงตัวจิ๋ว': `<ellipse cx="100" cy="108" rx="42" ry="34" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="100" cy="66" r="20" fill="${c2}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="92" cy="62" r="4" fill="#fff"/><circle cx="108" cy="62" r="4" fill="#fff"/>
+      <line x1="50" y1="96" x2="64" y2="104" stroke="${ink}" stroke-width="5" stroke-linecap="round"/>
+      <line x1="150" y1="96" x2="136" y2="104" stroke="${ink}" stroke-width="5" stroke-linecap="round"/>`,
+    'ผลไม้': `<circle cx="100" cy="110" r="50" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <ellipse cx="114" cy="48" rx="22" ry="11" transform="rotate(-18 114 48)" fill="${c2}" stroke="${ink}" stroke-width="4"/>
+      <path d="M72,90 Q66,108 72,122" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>`,
+    'ผักมีประโยชน์': `<path d="M100,46 C64,46 48,84 58,126 C66,156 134,156 142,126 C152,84 136,46 100,46 Z" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path d="M84,46 Q100,24 116,46" fill="none" stroke="${c2}" stroke-width="7" stroke-linecap="round"/>`,
+    'อาหาร': `<ellipse cx="100" cy="134" rx="68" ry="20" fill="#fff" stroke="${ink}" stroke-width="5"/>
+      <path d="M52,128 A48,48 0 0,1 148,128 Z" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="100" cy="72" r="10" fill="${c2}" stroke="${ink}" stroke-width="4"/>`,
+    'ร่างกาย': `<circle cx="100" cy="100" r="56" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="80" cy="90" r="7" fill="${ink}"/><circle cx="120" cy="90" r="7" fill="${ink}"/>
+      <path d="M78,114 Q100,136 122,114" fill="none" stroke="${ink}" stroke-width="5" stroke-linecap="round"/>`,
+    'ธรรมชาติ': `<circle cx="100" cy="96" r="46" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path d="M40,148 Q70,128 100,148 Q130,128 160,148" fill="none" stroke="${c2}" stroke-width="8" stroke-linecap="round"/>`,
+    'อากาศ': `<path d="M54,116 H148 A26,26 0 0,0 144,66 A34,34 0 0,0 74,60 A28,28 0 0,0 54,116 Z" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="82" cy="142" r="7" fill="${c2}" stroke="${ink}" stroke-width="3"/>
+      <circle cx="118" cy="142" r="7" fill="${c2}" stroke="${ink}" stroke-width="3"/>`,
+    'อวกาศ': `<circle cx="100" cy="100" r="46" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <ellipse cx="100" cy="100" rx="78" ry="22" transform="rotate(-18 100 100)" fill="none" stroke="${c2}" stroke-width="8"/>`,
+    'ยานพาหนะ': `<rect x="40" y="76" width="120" height="54" rx="14" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="66" cy="136" r="16" fill="${ink}"/><circle cx="134" cy="136" r="16" fill="${ink}"/>`,
+    'ของใช้ในบ้าน': `<rect x="52" y="54" width="96" height="96" rx="18" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="100" cy="102" r="24" fill="${c2}" stroke="${ink}" stroke-width="4"/>`,
+    'การเรียน': `<rect x="48" y="48" width="104" height="104" rx="16" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <line x1="68" y1="82" x2="132" y2="82" stroke="${ink}" stroke-width="6" stroke-linecap="round"/>
+      <line x1="68" y1="106" x2="118" y2="106" stroke="${ink}" stroke-width="6" stroke-linecap="round"/>`,
+    'เครื่องแต่งกาย': `<path d="M62,56 L100,44 L138,56 L156,88 L134,98 L126,80 V152 H74 V80 L66,98 L44,88 Z" fill="${c1}" stroke="${ink}" stroke-width="5" stroke-linejoin="round"/>`,
+    'กีฬาและของเล่น': `<circle cx="100" cy="100" r="54" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <polygon points="100,62 112,88 140,90 118,108 125,136 100,120 75,136 82,108 60,90 88,88" fill="${c2}" stroke="${ink}" stroke-width="3.5"/>`,
+    'ดนตรี': `<circle cx="80" cy="132" r="22" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path d="M98,132 V52 L144,42 V116" fill="none" stroke="${ink}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="126" cy="118" r="20" fill="${c2}" stroke="${ink}" stroke-width="5"/>`,
+    'เครื่องครัว': `<rect x="52" y="76" width="96" height="68" rx="14" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <line x1="44" y1="68" x2="156" y2="68" stroke="${ink}" stroke-width="7" stroke-linecap="round"/>`,
+    'อาชีพ': `<circle cx="100" cy="108" r="46" fill="#fff" stroke="${ink}" stroke-width="5"/>
+      <path d="M54,78 Q100,36 146,78 Z" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="84" cy="104" r="6" fill="${ink}"/><circle cx="116" cy="104" r="6" fill="${ink}"/>`,
+    'รูปทรง': `<polygon points="100,36 164,152 36,152" fill="${c1}" stroke="${ink}" stroke-width="6" stroke-linejoin="round"/>`,
+    'การกระทำ': `<circle cx="100" cy="62" r="24" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <path d="M62,110 Q100,86 138,110 M82,110 L70,158 M118,110 L130,158" fill="none" stroke="${ink}" stroke-width="7" stroke-linecap="round"/>`,
+    'สถานที่': `<polygon points="100,34 34,94 166,94" fill="${c2}" stroke="${ink}" stroke-width="5"/>
+      <rect x="50" y="94" width="100" height="70" fill="${c1}" stroke="${ink}" stroke-width="5"/>`,
+    'ของใช้ส่วนตัว': `<rect x="64" y="48" width="72" height="108" rx="22" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <circle cx="148" cy="54" r="10" fill="${c2}" stroke="${ink}" stroke-width="3"/>
+      <circle cx="52" cy="144" r="8" fill="${c2}" stroke="${ink}" stroke-width="3"/>`,
+    'เครื่องมือ': `<rect x="88" y="68" width="24" height="94" rx="8" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <rect x="52" y="44" width="96" height="32" rx="10" fill="${c2}" stroke="${ink}" stroke-width="5"/>`,
+    'สวนสวย': `<path d="M100,162 V96" stroke="${ink}" stroke-width="6" stroke-linecap="round"/>
+      <ellipse cx="76" cy="122" rx="22" ry="12" transform="rotate(-25 76 122)" fill="${c1}" stroke="${ink}" stroke-width="4"/>
+      <ellipse cx="124" cy="112" rx="22" ry="12" transform="rotate(25 124 112)" fill="${c1}" stroke="${ink}" stroke-width="4"/>
+      <circle cx="100" cy="72" r="28" fill="${c2}" stroke="${ink}" stroke-width="5"/>`,
+    'วันพิเศษ': `<rect x="48" y="76" width="104" height="82" rx="12" fill="${c1}" stroke="${ink}" stroke-width="5"/>
+      <rect x="42" y="58" width="116" height="24" rx="8" fill="${c2}" stroke="${ink}" stroke-width="5"/>
+      <line x1="100" y1="58" x2="100" y2="158" stroke="${ink}" stroke-width="7"/>`
+  };
+
+  const inner = badgeIcons[cat] || badgeIcons['วันพิเศษ'];
+  return `<svg viewBox="0 0 200 200" aria-label="${text}">
+    <g class="${motionClass}">${inner}</g>
+  </svg>`;
+}
+
+/* ====== 5. เรนเดอร์หน้าจอ ====== */
+function render(){
+  const main = document.getElementById('main');
+  const btnParent = document.getElementById('btnParentMode');
+  btnParent.textContent = saved.parentUnlock ? '🔓 โหมดทดลองเล่น: เปิด' : '🔒 โหมดทดลองเล่น: ปิด';
+  btnParent.classList.toggle('lemon', saved.parentUnlock);
+
+  const iso = todayISO();
+  const playIdx = PLAY_DAYS.indexOf(iso);
+  const isPlayableWeekday = playIdx !== -1;
+  const doneCount = Object.keys(saved.completedDays).length;
+
+  // หน้าตาราง 26 สัปดาห์ (จันทร์–ศุกร์ 130 วัน)
+  if(state.screen === 'calendar'){
+    const weeksHTML = Array.from({length: 26}, (_, wk) => {
+      const slice = PLAY_DAYS.slice(wk * 5, wk * 5 + 5);
+      const cat = WORDS_DB[(wk % 26) * 8][4];
+      return `
+        <div class="wk-row">
+          <div class="wk-row-head">
+            <b>🗓️ สัปดาห์ที่ ${wk + 1} (${fmtDateTH(slice[0])} – ${fmtDateTH(slice[4])})</b>
+            <span class="badge sky">หมวดหลัก: ${cat}</span>
+          </div>
+          <div class="wk-days">
+            ${slice.map((d, j) => {
+              const dIdx = wk * 5 + j;
+              const done = saved.completedDays[dIdx];
+              const isToday = d === iso;
+              const canOpen = isToday || saved.parentUnlock || !!done;
+              const dayCat = WORDS_DB[(dIdx % 26) * 8][4];
+              return `
+                <div class="day-pill ${done ? 'done' : ''} ${isToday ? 'today' : ''} ${!canOpen ? 'locked' : 'clickable'}" data-open-day="${dIdx}">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <b>วัน${dayNameTH(d)}</b>
+                    <span>${done ? `✅ ${done.known}/8` : isToday ? '🎯 วันนี้' : canOpen ? '🔓' : '🔒'}</span>
+                  </div>
+                  <div style="font-size:.86rem">${fmtDateTH(d)}</div>
+                  <div style="font-size:.76rem;opacity:.78">${dayCat} (8 คำ)</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    main.innerHTML = `
+      <section class="crayon" style="padding:18px">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+          <div>
+            <h2>📅 ตารางคำศัพท์วันจันทร์–ศุกร์ (6 เดือน • 26 สัปดาห์)</h2>
+            <p style="margin:4px 0 0;font-size:.9rem">เริ่มจันทร์ที่ 23 พ.ย. 2569 ถึง 23 พ.ค. 2570 • เล่นวันจันทร์–ศุกร์ (หยุดเฉพาะวันอาทิตย์ / สุดสัปดาห์) • ผ่านแล้ว <b>${doneCount}/${PLAY_DAYS.length}</b> วัน</p>
+          </div>
+          <button class="btn orange" id="btnBackToPlay">⬅️ กลับหน้าเล่นเกม</button>
+        </div>
+        <div class="week-list">${weeksHTML}</div>
+      </section>
+    `;
+    document.getElementById('btnBackToPlay').onclick = () => { state.screen = 'play'; render(); };
+    document.querySelectorAll('[data-open-day]').forEach(el => {
+      el.onclick = () => {
+        const idx = Number(el.dataset.openDay);
+        const d = PLAY_DAYS[idx];
+        const canOpen = (d === iso) || saved.parentUnlock || !!saved.completedDays[idx];
+        if(!canOpen){
+          toast('🔒 เล่นได้เฉพาะวันจันทร์–ศุกร์ตามตาราง หรือเปิด "โหมดทดลองเล่น" ด้านบน');
+          return;
+        }
+        initDaySession(idx, false);
+        render();
+      };
+    });
+    return;
+  }
+
+  // กรณีตรงกับวันหยุด (วันอาทิตย์ / เสาร์ หรือก่อนวันจันทร์ที่ 23 พ.ย. 2569) และไม่ได้เปิดโหมดทดลองเล่น
+  if(!isPlayableWeekday && !saved.parentUnlock){
+    const nextDay = nextPlayDayFrom(iso);
+    const nextIdx = PLAY_DAYS.indexOf(nextDay);
+    const diff = daysBetween(iso, nextDay);
+    const cat = WORDS_DB[(nextIdx % 26) * 8][4];
+    const isSundayNow = parseISO(iso).getDay() === 0;
+    main.innerHTML = `
+      <section class="crayon lock-box">
+        <div class="lock-icon">${isSundayNow ? '🌞' : '🛌'}</div>
+        <h2 class="lock-title">${isSundayNow ? 'วันนี้วันอาทิตย์ — วันหยุดพักผ่อนของหนู ๆ จ้า' : 'วันนี้ยังไม่อยู่ในรอบวันจันทร์–ศุกร์นะจ๊ะ'}</h2>
+        <p style="font-size:1.05rem;max-width:580px;margin:0 auto">
+          ตารางคำศัพท์ภาษาอังกฤษรอบตัวเปิดให้เล่น <b>ทุกวันจันทร์–ศุกร์ (หยุดเฉพาะวันอาทิตย์ / วันหยุดสุดสัปดาห์)</b> เริ่มตั้งแต่วันจันทร์ที่ 23 พ.ย. 2569 เป็นต้นไป
+        </p>
+        <div class="countdown-pill">
+          🗓️ รอบเล่นถัดไป: <b>วัน${dayNameTH(nextDay)}ที่ ${fmtDateTH(nextDay)}</b> (วันที่ ${nextIdx + 1}/${PLAY_DAYS.length} • หมวด${cat})
+          ${diff > 0 ? `<br><small>อีก ${diff} วัน จะเปิดชุดคำศัพท์ภาษาอังกฤษ 8 คำอัตโนมัติ</small>` : ''}
+        </div>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+          <button class="btn sky" id="btnLockCal">📅 ดูตารางเรียน จันทร์–ศุกร์ (ผ่านแล้ว ${doneCount}/${PLAY_DAYS.length} วัน)</button>
+          <button class="btn mint" id="btnUnlockNow">🔓 ผู้ปกครองกดเพื่อทดลองเล่นตอนนี้</button>
+        </div>
+      </section>
+    `;
+    document.getElementById('btnLockCal').onclick = () => { state.screen = 'calendar'; render(); };
+    document.getElementById('btnUnlockNow').onclick = () => {
+      saved.parentUnlock = true;
+      persist();
+      const targetIdx = playIdx !== -1 ? playIdx : Math.max(0, nextIdx);
+      initDaySession(targetIdx, false);
+      toast('🔓 เปิดโหมดทดลองเล่นแล้ว');
+      render();
+    };
+    return;
+  }
+
+  // หน้าสรุปผลเมื่อเล่นครบ 8 คำ
+  if(state.screen === 'summary'){
+    const knownN = state.status.filter(s => s === 'known').length;
+    const revN = state.status.filter(s => s === 'review').length;
+    const dISO = PLAY_DAYS[state.dayIdx];
+    const wkNum = Math.floor(state.dayIdx / 5) + 1;
+    main.innerHTML = `
+      <section class="crayon sum-card">
+        <div style="font-size:4rem">🏆</div>
+        <h2 style="font-size:1.85rem">เก่งมาก! จบชุดคำศัพท์วัน${dayNameTH(dISO)}ที่ ${fmtDateTH(dISO)} แล้ว</h2>
+        <p style="font-size:1.05rem;margin:6px 0">
+          สัปดาห์ที่ ${wkNum} (วันที่ ${state.dayIdx + 1}/${PLAY_DAYS.length}) • จำได้แล้ว <b>${knownN}/${state.words.length}</b> คำ • ทบทวนต่อ <b>${revN}</b> คำ
+        </p>
+        <div class="sum-grid">
+          ${state.words.map((w, i) => {
+            const st = state.status[i];
+            return `
+              <div class="mini-card ${st}">
+                <div>
+                  <div style="font-weight:700;font-size:1.2rem">${w.text} <small style="opacity:.7">(EN)</small></div>
+                  <div style="font-size:.88rem;color:#7a5c8a">${w.reading} • ${w.meaning}</div>
+                </div>
+                <span class="badge ${st === 'known' ? 'mint' : 'pink'}">${st === 'known' ? '✓ จำได้' : '⭐ ทบทวน'}</span>
+              </div>
+            `;
+          }).join('')}
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px">
+          <button class="btn lg orange" id="btnRestartAll">↺ ทำใหม่ทั้งหมด (${state.words.length} คำ)</button>
+          ${revN > 0 ? `<button class="btn lg pink" id="btnReviewOnly">⭐ ทบทวนเฉพาะคำที่ยังไม่แม่น (${revN} คำ)</button>` : ''}
+          <button class="btn lg sky" id="btnGoCal">📅 ดูตารางเรียน 6 เดือน</button>
+        </div>
+      </section>
+    `;
+    document.getElementById('btnRestartAll').onclick = () => {
+      initDaySession(state.dayIdx, false);
+      render();
+    };
+    const btnRev = document.getElementById('btnReviewOnly');
+    if(btnRev){
+      btnRev.onclick = () => {
+        initDaySession(state.dayIdx, true);
+        render();
+      };
+    }
+    document.getElementById('btnGoCal').onclick = () => { state.screen = 'calendar'; render(); };
+    return;
+  }
+
+  // หน้าจอเล่นหลัก (ภาพเคลื่อนไหวใหญ่ 80% คู่กับคำศัพท์ภาษาอังกฤษและคำอ่าน)
+  const w = state.words[state.idx];
+  const dISO = PLAY_DAYS[state.dayIdx];
+  const wkNum = Math.floor(state.dayIdx / 5) + 1;
+  const knownCnt = state.status.filter(s => s === 'known').length;
+  const revCnt = state.status.filter(s => s === 'review').length;
+
+  main.innerHTML = `
+    <div class="stage-wrap">
+      <div class="stage-top">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+          <span class="badge lemon">🗓️ สัปดาห์ ${wkNum} • วัน${dayNameTH(dISO)}ที่ ${fmtDateTH(dISO)}</span>
+          <span class="badge sky">หมวด: ${w.cat}</span>
+          ${state.reviewOnly ? '<span class="badge pink">⭐ โหมดทบทวนคำที่ยังไม่แม่น</span>' : ''}
+        </div>
+        <div class="dots" aria-label="ตัวเลขข้อ">
+          ${state.words.map((_, i) => {
+            const st = state.status[i];
+            return `<button class="dot ${i === state.idx ? 'cur' : ''} ${st}" data-jump="${i}" title="ข้อที่ ${i+1}">${i+1}</button>`;
+          }).join('')}
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <span class="badge mint">✓ จำได้ ${knownCnt}</span>
+          <span class="badge pink">⭐ ทบทวน ${revCnt}</span>
+        </div>
+      </div>
+
+      <article class="crayon hero-card">
+        <div class="hero-meta">
+          <span class="badge sky">🔤 English Vocabulary</span>
+          <b>คำที่ ${state.idx + 1} จาก ${state.words.length}</b>
+          <button class="btn small sky" id="btnSpeakTop">🔊 อ่านคำศัพท์</button>
+        </div>
+
+        <div class="anim-stage" id="animBox" title="แตะที่ภาพเพื่อฟังเสียงอ่านคำศัพท์">
+          ${buildAnimatedSVG(w)}
+          <span class="tap-hint">👆 แตะที่ภาพเพื่อฟังเสียงอ่าน</span>
+        </div>
+
+        <div class="word-panel">
+          <div class="word-main-row">
+            <span class="word-text">${w.text}</span>
+            <button class="btn sky" id="btnSpeakMain">🔊 ฟังเสียงอ่าน</button>
+          </div>
+          <div class="word-reading">🗣️ คำอ่าน: ${w.reading}</div>
+          <div class="word-meaning">💡 ความหมาย: ${w.meaning}</div>
+        </div>
+      </article>
+
+      <div class="ctrl-bar">
+        <div class="ctrl-nav">
+          <button class="btn lg" id="btnPrev" ${state.idx === 0 ? 'disabled' : ''}>⬅️ ย้อนกลับ</button>
+          <button class="btn lg" id="btnSkip">➡️ ข้าม</button>
+          <button class="btn lg lemon" id="btnRestart">↺ ทำใหม่</button>
+        </div>
+        <div class="ctrl-judge">
+          <button class="btn xl pink" id="btnReview">⭐ ทบทวนต่อ</button>
+          <button class="btn xl mint" id="btnKnown">✓ จำได้แล้ว</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('btnSpeakTop').onclick = () => speakWord(w);
+  document.getElementById('btnSpeakMain').onclick = () => speakWord(w);
+  document.getElementById('animBox').onclick = () => speakWord(w);
+
+  document.querySelectorAll('[data-jump]').forEach(btn => {
+    btn.onclick = () => {
+      state.idx = Number(btn.dataset.jump);
+      render();
+    };
+  });
+
+  document.getElementById('btnPrev').onclick = () => {
+    if(state.idx > 0){
+      state.idx--;
+      render();
+    }
+  };
+
+  document.getElementById('btnSkip').onclick = () => {
+    goNextStep();
+  };
+
+  document.getElementById('btnRestart').onclick = () => {
+    initDaySession(state.dayIdx, state.reviewOnly);
+    toast('↺ เริ่มทำใหม่ตั้งแต่คำที่ 1');
+    render();
+  };
+
+  document.getElementById('btnReview').onclick = () => {
+    state.status[state.idx] = 'review';
+    goNextStep();
+  };
+
+  document.getElementById('btnKnown').onclick = () => {
+    state.status[state.idx] = 'known';
+    goNextStep();
+  };
+}
+
+function goNextStep(){
+  if(state.idx + 1 < state.words.length){
+    state.idx++;
+    render();
+  } else {
+    const knownN = state.status.filter(s => s === 'known').length;
+    if(!state.reviewOnly){
+      saved.completedDays[state.dayIdx] = {
+        date: todayISO(),
+        known: knownN,
+        total: state.words.length
+      };
+      persist();
+    }
+    state.screen = 'summary';
+    render();
+  }
+}
+
+/* ====== 6. ปุ่มบน Header & เริ่มต้นระบบ ====== */
+document.getElementById('btnViewCal').onclick = () => {
+  state.screen = state.screen === 'calendar' ? 'play' : 'calendar';
+  render();
+};
+
+document.getElementById('btnParentMode').onclick = () => {
+  saved.parentUnlock = !saved.parentUnlock;
+  persist();
+  toast(saved.parentUnlock ? '🔓 เปิดโหมดทดลองเล่นแล้ว (เลือกเล่นได้ทุกวันในตาราง)' : '🔒 ปิดโหมดทดลองเล่นแล้ว');
+  render();
+};
+
+(function boot(){
+  const iso = todayISO();
+  const pIdx = PLAY_DAYS.indexOf(iso);
+  if(pIdx !== -1){
+    initDaySession(pIdx, false);
+  } else {
+    const nextDay = nextPlayDayFrom(iso);
+    const idx = Math.max(0, PLAY_DAYS.indexOf(nextDay));
+    initDaySession(idx, false);
+  }
+  render();
+})();
+</script>
+</body>
+</html>
